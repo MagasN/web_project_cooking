@@ -63,7 +63,7 @@ class Recipe(db.Model):
     created_at = db.Column(db.DateTime)
     is_deleted = db.Column(db.Boolean)
     is_archived = db.Column(db.Boolean) 
-    archived_at = db.Column(db.Boolean) 
+    archived_at = db.Column(db.DateTime) 
     comment_id = db.Column(db.Integer, db.ForeignKey(Comment.id), index=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True, nullable=False)
     ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
