@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 
-from app.model import db
+from webapp.model import db
 
 
 def create_app():
