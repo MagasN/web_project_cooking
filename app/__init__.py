@@ -12,6 +12,6 @@ def create_app():
     @app.route('/home')
     def index():
         recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
-        return render_template('index.html', recipe_list=recipes_list)
+        return render_template('index.html', recipes_list=recipes_list)
     
     return app
