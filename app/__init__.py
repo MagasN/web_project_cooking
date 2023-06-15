@@ -9,7 +9,7 @@ def create_app():
     db.init_app(app)
 
     @app.route('/')
-    @app.route('home')
+    @app.route('/home')
     def index():
         recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
         return render_template('index.html', recipe_list=recipes_list)
