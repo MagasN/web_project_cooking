@@ -1,1 +1,37 @@
-111
+{% extends 'base.html' %}
+
+{% block title %}
+Топ рецептов
+{% endblock %}
+
+{% block content %}
+<div class="col-md-10 col-sm-12">
+    <div class="posts-header border rounded-3 p-2 text-center mb-3">
+        <h5>Топ</h5>
+    </div>
+{% if recipes_list|length > 0 %}
+    {% for recipe in recipes_list %}
+    <div class="rounded-1 p-1">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>{{ recipe.title }}</h5>
+                <span>Автор: Вася Пупкин</span>
+            </div>
+            <div class="card-body">
+                <span><img class="img-thumbnail rounded float-start me-4" src="../static/img/posts_img.png" alt="posts_img" width="180px" height="100px"></span>
+                <p class="card-text">{{ recipe.decription_recipe }}</p>
+            </div>
+            <div class="card-footer text-body-secondary">
+                <span>Дата: {{ recipe.created_at }}</span>
+                <a href="/recipe/{{ recipe.id }}/edit" class="btn btn-success">Редактировать</a>
+                <a href="/recipe/{{ recipe.id }}/delete" class="btn btn-danger">Удалить</a>
+                <a href="/recipe/{{ recipe.id }}" class="btn btn-primary">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<p class="text-center">Нет рецептов на данный момент</p>
+{% endif %}
+</div>
+{% endblock %}

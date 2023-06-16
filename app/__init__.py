@@ -1,5 +1,4 @@
 from flask import Flask, render_template, redirect
-
 from app.model import db, Recipe
 
 
@@ -13,5 +12,11 @@ def create_app():
     def index():
         recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
         return render_template('index.html', recipes_list=recipes_list)
+
+    @app.route('/recipes/top')
+    def top_recipes():
+        recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
+        return render_template('top_recipes.html', recipes_list=recipes_list)
     
+
     return app
