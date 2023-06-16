@@ -32,7 +32,7 @@ class Unit(db.Model):
     __tablename__ = 'units_measure'
 
     id = db.Column(db.Integer, primary_key=True)
-    unit_name = db.Column(db.String)
+    unit_name = db.Column(db.String, nullable=False)
    
     def __repr__(self):
         return f'Unit id: {self.id}, name: {self.unit_name}'
@@ -41,8 +41,8 @@ class Ingredient(db.Model):
     __tablename__ = 'ingredients'
 
     id = db.Column(db.Integer, primary_key=True)
-    ingredient_name = db.Column(db.String)
-    ingredient_quantily = db.Column(db.String)
+    ingredient_name = db.Column(db.String, nullable=False)
+    ingredient_quantily = db.Column(db.String, nullable=False)
     unit_id = db.Column(db.Integer, db.ForeignKey(Unit.id), index=True, nullable=False)
 
     def __repr__(self):
@@ -64,7 +64,7 @@ class Recipe(db.Model):
     is_deleted = db.Column(db.Boolean)
     is_archived = db.Column(db.Boolean) 
     archived_at = db.Column(db.DateTime) 
-    comment_id = db.Column(db.Integer, db.ForeignKey(Comment.id), index=True, nullable=False)
+    comment_id = db.Column(db.Integer, db.ForeignKey(Comment.id), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True, nullable=False)
     ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
 
