@@ -23,11 +23,12 @@
             <img src="../static/img/no_photo.png" alt="photo" class="rounded-circle" width="64" height="64">
           </a>
           <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item" href="#">Мои рецепты</a></li>
-            <li><a class="dropdown-item" href="#">Добавить рецепт</a></li>
-            <li><a class="dropdown-item" href="#">Избранное</a></li>
+            <li><a class="dropdown-item" href="/profile">Профиль</a></li>
+            <li><a class="dropdown-item" href="/recipes/my">Мои рецепты</a></li>
+            <li><a class="dropdown-item" href="/recipes/add">Добавить рецепт</a></li>
+            <li><a class="dropdown-item" href="/recipes/favorite">Избранное</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Выход</a></li>
+            <li><a class="dropdown-item" href="/exit">Выход</a></li>
           </ul>
         </div>
       </div>
@@ -39,10 +40,10 @@
       <div class="col-md-2 col-sm-12 mb-3">
         <div class="sidebar border rounded-3 p-2">
           <ul class="nav nav-pills flex-column mb-auto text-center">
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Свежее</a></li>
-            <li><a href="#" class="nav-link link-body-emphasis">Топ</a></li>
+            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Свежее</a></li>
+            <li><a href="/recipes/top" class="nav-link link-body-emphasis">Топ</a></li>
             <hr>
-            <li><a href="#" class="nav-link link-body-emphasis">Поиск</a></li>
+            <li><a href="/search" class="nav-link link-body-emphasis">Поиск</a></li>
           </ul>
         </div>
       </div>
