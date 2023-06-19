@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, url_for
+from app.forms import AddRecipeForm
 from app.model import db, Recipe
 
 
@@ -20,10 +21,11 @@ def create_app():
         recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
         return render_template('top_recipes.html', recipes_list=recipes_list)
     
-    @app.route('/recipes/add')
+    @app.route('/recipes/add', methods=['POST', 'GET'])
     def add_recipe():
         # Нужно доделать, сделал простенькую форму с самыми основными полями для начала
-        return render_template('add_recipe.html')
+        add_recipe_form = AddRecipeForm()
+        return render_template('add_recipe.html', form=add_recipe_form)
     
 
     return app
