@@ -21,11 +21,19 @@ def create_app():
         recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
         return render_template('top_recipes.html', recipes_list=recipes_list)
     
-    @app.route('/recipes/add', methods=['POST', 'GET'])
+    @app.route('/recipes/add')
     def add_recipe():
         # Нужно доделать, сделал простенькую форму с самыми основными полями для начала
         add_recipe_form = AddRecipeForm()
         return render_template('add_recipe.html', form=add_recipe_form)
+    
+    @app.route('/process-add-recipe', methods=['POST'])
+    def process_add_recipe():
+        form = AddRecipeForm()
+
+        # if form.validate_on_submit():
+            
+
     
 
     return app
