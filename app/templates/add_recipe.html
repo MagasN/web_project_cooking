@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    <form action="" method="post">
+                    <form action="{{ url_for('process_add_recipe') }}" method="post">
                         {{ form.hidden_tag() }}
                         <div class="form-floating mb-3">
                             {{ form.title(class_="form-control", id_="floatingInput") }}
