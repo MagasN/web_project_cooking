@@ -30,12 +30,12 @@ def create_app():
     def process_add_recipe():
         form = AddRecipeForm()
         if form.validate_on_submit():
-            new_recipe = Recipe(title = form.title.data,
-                                 decription_recipe = form.decription_recipe.data,
-                                 steps_recipe = form.steps_recipe.data,
-                                 servings = form.servings.data,
-                                 time_cooking = form.time_cooking.data
-                                 )
+            new_recipe = Recipe(title=form.title.data,
+                                decription_recipe=form.decription_recipe.data,
+                                steps_recipe=form.steps_recipe.data,
+                                servings=form.servings.data,
+                                time_cooking=form.time_cooking.data
+                                )
             db.session.add(new_recipe)
             db.session.commit()
             flash('Рецепт успешно добавлен!')

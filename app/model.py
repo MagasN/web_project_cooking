@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
 
 db = SQLAlchemy()
 
@@ -10,7 +12,7 @@ class User(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     image_user = db.Column(db.String)
     password = db.Column(db.String)
-    created_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_deleted = db.Column(db.Boolean)
     
     def __repr__(self):
@@ -21,7 +23,7 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String)
-    created_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_deleted = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True, nullable=False)
     
@@ -60,13 +62,13 @@ class Recipe(db.Model):
     negative_feedback = db.Column(db.Integer)
     servings = db.Column(db.Integer, nullable=False)
     time_cooking = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_deleted = db.Column(db.Boolean)
     is_archived = db.Column(db.Boolean) 
     archived_at = db.Column(db.DateTime) 
     comment_id = db.Column(db.Integer, db.ForeignKey(Comment.id), index=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True, nullable=False)
-    ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
+    # user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True, nullable=False)
+    # ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
 
     def __repr__(self):
         return f'Recipe id: {self.id}, title: {self.title}'
