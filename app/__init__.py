@@ -22,7 +22,7 @@ def create_app():
     
     @app.route('/recipes/add')
     def add_recipe():
-        # Нужно доделать, сделал простенькую форму с самыми основными полями для начала
+        # Нужно доделать (реализовать )
         add_recipe_form = AddRecipeForm()
         return render_template('add_recipe.html', form=add_recipe_form)
     
@@ -42,6 +42,14 @@ def create_app():
             return redirect(url_for('index'))
         flash('Неправильно заполнена форма!')
         return redirect(url_for('add_recipe'))
+    
+    @app.route('/search', methods=['GET'])
+    def search():
+        return render_template('search.html')
+    
+    @app.route('/process-search', methods=['POST'])
+    def process_search():
+        pass
     
 
     return app

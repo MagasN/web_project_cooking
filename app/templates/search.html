@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Поиск рецепта
+{% endblock %}
+
+{% block content %}
+<div class="col-md-10 col-sm-12">
+    <div class="posts-header border rounded-3 p-2 text-center mb-3">
+        <h5>Поиск</h5>
+    </div>
+    <div class="rounded-1 p-1">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Форма</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <form action="{{ url_for('process_search') }}" method="post">
+                        {{ form.hidden_tag() }}
+                    </form>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

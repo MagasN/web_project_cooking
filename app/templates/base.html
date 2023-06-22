@@ -40,10 +40,10 @@
       <div class="col-md-2 col-sm-12 mb-3">
         <div class="sidebar border rounded-3 p-2">
           <ul class="nav nav-pills flex-column mb-auto text-center">
-            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Свежее</a></li>
-            <li><a href="/recipes/top" class="nav-link link-body-emphasis">Топ</a></li>
+            <li class="nav-item"><a href="{{ url_for('index') }}" class="nav-link active" aria-current="page">Свежее</a></li>
+            <li><a href="{{ url_for('top_recipes') }}" class="nav-link link-body-emphasis">Топ</a></li>
             <hr>
-            <li><a href="/search" class="nav-link link-body-emphasis">Поиск</a></li>
+            <li><a href="{{ url_for('search') }}" class="nav-link link-body-emphasis">Поиск</a></li>
           </ul>
         </div>
       </div>
