@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Результаты поиска
+{% endblock %}
+
+{% block content %}
+<div class="col-md-10 col-sm-12">
+    <div class="posts-header border rounded-3 p-2 text-center mb-3">
+        <h5>Результаты поиска</h5>
+    </div>
+{% if search_results %}
+    {% for result in search_results %}
+    <div class="rounded-1 p-1">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>{{ result.title }}</h5>
+                <span>Автор: Вася Пупкин</span>
+            </div>
+            <div class="card-body">
+                <span><img class="img-thumbnail rounded float-start me-4" src="../static/img/posts_img.png" alt="posts_img" width="180px" height="100px"></span>
+                <p class="card-text">{{ result.decription_recipe }}</p>
+            </div>
+            <div class="card-footer text-body-secondary">
+                <span>Дата: {{ result.created_at }}</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="rounded-1 p-1">
+    <div class="card mb-3">
+        <div class="card-header">
+            &nbsp
+        </div>
+        <div class="card-body">
+            <p class="text-center">Нет результатов поиска</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+</div>
+{% endblock %}

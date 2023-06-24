@@ -1,58 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block page_title %}{% endblock %}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-
-  <header class="p-3 mb-3 border-bottom">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block page_title %}{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
     <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <div class="col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-            <b>Лого</b>
-          </a>
-        </div>  
+      <header class="p-3 mb-3 border-bottom">
+        <div
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+        >
+          <div
+            class="col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+          >
+            <a
+              href="/"
+              class="d-flex align-items-center link-body-emphasis text-decoration-none"
+            >
+              <!-- <b>Лого</b> -->
+            </a>
+          </div>
 
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="../static/img/no_photo.png" alt="photo" class="rounded-circle" width="64" height="64">
-          </a>
-          <ul class="dropdown-menu text-small">
-            <li><a class="dropdown-item" href="/profile">Профиль</a></li>
-            <li><a class="dropdown-item" href="/recipes/my">Мои рецепты</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('add_recipe') }}">Добавить рецепт</a></li>
-            <li><a class="dropdown-item" href="/recipes/favorite">Избранное</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/exit">Выход</a></li>
-          </ul>
+          <div class="dropdown text-end">
+            <a
+              href="#"
+              class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="../static/img/no_photo.png"
+                alt="photo"
+                class="rounded-circle"
+                width="64"
+                height="64"
+              />
+            </a>
+            <ul class="dropdown-menu text-small">
+              <li><a class="dropdown-item" href="/profile">Профиль</a></li>
+              <li>
+                <a class="dropdown-item" href="/recipes/my">Мои рецепты</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{{ url_for('add_recipe') }}"
+                  >Добавить рецепт</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="/recipes/favorite">Избранное</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="/exit">Выход</a></li>
+            </ul>
+          </div>
         </div>
+      </header>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 col-sm-12 mb-3">
+          <div class="sidebar border rounded-3 p-2">
+            <ul class="nav nav-pills flex-column mb-auto text-center">
+              <li class="nav-item">
+                <a
+                  href="{{ url_for('index') }}"
+                  class="nav-link active"
+                  aria-current="page"
+                  >Свежее</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{{ url_for('top_recipes') }}"
+                  class="nav-link link-body-emphasis"
+                  >Топ</a
+                >
+              </li>
+              <hr />
+              <li>
+                <a
+                  href="{{ url_for('search') }}"
+                  class="nav-link link-body-emphasis"
+                  >Поиск</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {% block content %}{% endblock %}
       </div>
     </div>
-  </header>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-2 col-sm-12 mb-3">
-        <div class="sidebar border rounded-3 p-2">
-          <ul class="nav nav-pills flex-column mb-auto text-center">
-            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Свежее</a></li>
-            <li><a href="/recipes/top" class="nav-link link-body-emphasis">Топ</a></li>
-            <hr>
-            <li><a href="/search" class="nav-link link-body-emphasis">Поиск</a></li>
-          </ul>
-        </div>
-      </div>
-
-    {% block content %}{% endblock %}
-
-    </div>
-  </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
