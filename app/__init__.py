@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, request
 from app.forms import AddRecipeForm
 from app.model import db, Recipe
 
@@ -22,7 +22,7 @@ def create_app():
     
     @app.route('/recipes/add')
     def add_recipe():
-        # Нужно доделать (реализовать )
+        # Нужно доделать
         add_recipe_form = AddRecipeForm()
         return render_template('add_recipe.html', form=add_recipe_form)
     
@@ -43,13 +43,18 @@ def create_app():
         flash('Неправильно заполнена форма!')
         return redirect(url_for('add_recipe'))
     
-    @app.route('/search', methods=['GET'])
+    @app.route('/search')
     def search():
         return render_template('search.html')
     
-    @app.route('/process-search', methods=['POST'])
-    def process_search():
-        pass
-    
+    @app.route('/search-results')
+    def search_results():
+        q = request.args.get('q')
+        print(q)
+        if q:
+            search_results = Recipe.query.filter(Recipe.title.contains(q) | Recipe.decription_recipe.contains(q)).all()
+            print(type(search_results))
+        return render_template('search_result.html', search_results=search_results)
+
 
     return app

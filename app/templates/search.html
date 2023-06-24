@@ -16,8 +16,13 @@
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    <form action="{{ url_for('process_search') }}" method="post">
-                        {{ form.hidden_tag() }}
+                    <form class="row" action="{{ url_for('search_results') }}" method="GET">
+                        <div class="col-auto">
+                            <input type="text" class="form-control" placeholder="Поиск" name="q" value="{{ request.args.get('q', '') }}">
+                        </div>
+                        <div class="col-auto">
+                            <input class="btn btn-primary" id="submit" type="submit" value="Найти">
+                        </div>
                     </form>
                 </p>
             </div>
