@@ -43,6 +43,17 @@ def create_app():
         flash('Неправильно заполнена форма!')
         return redirect(url_for('add_recipe'))
     
+    @app.route('/recipe/delete/<int:id>')
+    def recipe_delete(id):
+        recipe = Recipe.query.get_or_404(id)
+        try:
+            db.session.delete(recipe)
+            db.session.commit()
+            flash('Рецепт удален!')
+            return redirect('/')
+        except:
+            return 'При удалении рецепта произошла ошибка'
+    
     @app.route('/search')
     def search():
         return render_template('search.html')
