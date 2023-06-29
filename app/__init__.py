@@ -20,6 +20,12 @@ def create_app():
         recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
         return render_template('top_recipes.html', recipes_list=recipes_list)
     
+    @app.route('/recipe/<int:id>')
+    def recipe_page(id):
+        recipe = Recipe.query.get(id)
+        print(recipe)
+        return render_template('recipe_page.html', recipe=recipe)
+    
     @app.route('/recipes/add')
     def add_recipe():
         # Нужно доделать
