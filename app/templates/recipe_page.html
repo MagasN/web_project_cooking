@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ recipe.title }}
+{% endblock %}
+
+{% block content %}
+<div class="col-md-10 col-sm-12">
+    <div class="posts-header border rounded-3 p-2 ps-4 mb-3">
+        <h5>{{ recipe.title }}</h5>
+    </div>
+    <div class="rounded-1 p-1">
+        <div class="card mb-3">
+            <div class="card-body row">
+
+                <div class="col-3"><img class="img-thumbnail rounded float-start me-4" src="../static/img/posts_img.png" alt="posts_img" width="280px" height="200px"></div>
+                <div class="col-6">
+                    Ингредиенты:
+                    <!-- Вывести циклом ingredient_id -->
+                </div>
+                <div class="col-3">
+                    Количество порций: {{ recipe.servings }}<br>
+                    Время приготовления: {{ recipe.time_cooking }} минут
+                </div>
+
+              <div class="col-12">
+                <p class="pt-3">{{ recipe.decription_recipe }}</p>
+              </div>
+              <div class="col-12">
+                <h5><strong>Пошаговый рецепт приготовления</strong></h5>
+                <p>{{ recipe.steps_recipe }}</p>
+              </div> 
+            </div>
+            <div class="card-footer text-body-secondary">
+                <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
+                <!-- Здесь нужно подставить автора по user_id рецепта -->
+                <span>Автор рецепта: Вася Пупкин</span>
+                <a href="/recipe/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
+                <a href="/recipe/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

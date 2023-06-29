@@ -10,19 +10,20 @@
         <h5>Результаты поиска</h5>
     </div>
 {% if search_results %}
-    {% for result in search_results %}
+    {% for recipe in search_results %}
     <div class="rounded-1 p-1">
         <div class="card mb-3">
             <div class="card-header">
-                <h5>{{ result.title }}</h5>
+                <h5><a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a></h5>
                 <span>Автор: Вася Пупкин</span>
             </div>
             <div class="card-body">
                 <span><img class="img-thumbnail rounded float-start me-4" src="../static/img/posts_img.png" alt="posts_img" width="180px" height="100px"></span>
-                <p class="card-text">{{ result.decription_recipe }}</p>
+                <p class="card-text">{{ recipe.decription_recipe }}</p>
             </div>
             <div class="card-footer text-body-secondary">
-                <span>Дата: {{ result.created_at }}</span>
+                <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
+                <a href="/recipe/{{ recipe.id }}" class="btn btn-primary">Подробнее</a>
             </div>
         </div>
     </div>
