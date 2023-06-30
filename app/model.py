@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-# На завершающем этапе перенести class User в папку User.model, поменять пути
+# При распределении перенести class User в папку User.model, поменять пути
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, unique=True, nullable=False)
     image_user = db.Column(db.String)
     password = db.Column(db.String)
-    role = db.Column(db.String, index=True)
+    role = db.Column(db.String, default='user', index=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_deleted = db.Column(db.Boolean)
     
