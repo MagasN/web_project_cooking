@@ -24,30 +24,28 @@
               </div>
               {% endif %}
           {% endwith %}
-            <form action="{{ url_for('user.process_login') }}" method="POST">
+            <form action="{{ url_for('user.process_register') }}" method="POST">
                 {{ form.hidden_tag() }}
                 <div class="form-group">
                     {{ form.username.label }} <br>
                     {{ form.username() }}
                 </div>
                 <div class="form-group">
+                  {{ form.full_name.label }} <br>
+                  {{ form.full_name() }}
+              </div>              
+                <div class="form-group">
                     {{ form.password.label }} <br>
                     {{ form.password() }}
                 </div>
-                <div class="form-group form-check">
-                    {{ form.remember_me() }}
-                    {{ form.remember_me.label(class_='form-check-label') }}
-                </div>
+                <div class="form-group">
+                  {{ form.password2.label }} <br>
+                  {{ form.password2() }}
+              </div>
                 {{ form.submit() }}
-                <p><a href="{{ url_for('user.register') }}">Жми, чтобы зарегистрироваться!</a></p>
             </form>
         </div>
         <div class="col-8">
-            
-            
-        </div>
-    </div>
-    </div>  
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

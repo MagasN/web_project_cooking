@@ -1,22 +1,36 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-class User(db.Model):
+# При распределении перенести class User в папку User.model, поменять пути
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String, unique=True, nullable=False)
     image_user = db.Column(db.String)
     password = db.Column(db.String)
+    role = db.Column(db.String, default='user', index=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_deleted = db.Column(db.Boolean)
     
     def __repr__(self):
         return f'<User id: {self.id}, name: {self.full_name}>'
+    
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+    
+    @property
+    def is_admin(self):
+        return self.role == 'admin'
     
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -67,8 +81,8 @@ class Recipe(db.Model):
     is_archived = db.Column(db.Boolean) 
     archived_at = db.Column(db.DateTime) 
     comment_id = db.Column(db.Integer, db.ForeignKey(Comment.id), index=True)
-    # user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True, nullable=False)
-    # ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True, nullable=False)
+    ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
 
     def __repr__(self):
         return f'Recipe id: {self.id}, title: {self.title}'
