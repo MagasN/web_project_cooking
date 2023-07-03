@@ -2,10 +2,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request
 from app.forms import AddRecipeForm, EditRecipeForm
 from flask_login import LoginManager, current_user, login_required
 
-from app.forms import AddRecipeForm
-from app.model import db, Recipe
-
-from app.model import User
+from app.model import db, Recipe, User
 # from app.user.model import User
 from app.user.views import blueprint as user_blueprint
 
