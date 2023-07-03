@@ -1,27 +1,12 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
-from app.forms import AddRecipeForm, EditRecipeForm
-from flask_login import LoginManager, current_user, login_required
-
 from app.forms import AddRecipeForm
 from app.model import db, Recipe
 
-from app.model import User
-# from app.user.model import User
-from app.user.views import blueprint as user_blueprint
 
 def create_app():
     app = Flask(__name__)
     app.config.from_pyfile('config.py')
     db.init_app(app)
-
-    login_manager = LoginManager()
-    login_manager.init_app(app)
-    login_manager.login_view = 'user.login'
-    app.register_blueprint(user_blueprint)
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(user_id)
 
     @app.route('/')
     def index():
@@ -41,7 +26,7 @@ def create_app():
         print(recipe)
         return render_template('recipe_page.html', recipe=recipe)
     
-    @app.route('/recipe/add')
+    @app.route('/recipes/add')
     def add_recipe():
         # Нужно доделать
         add_recipe_form = AddRecipeForm()
@@ -63,19 +48,6 @@ def create_app():
             return redirect(url_for('index'))
         flash('Неправильно заполнена форма!')
         return redirect(url_for('add_recipe'))
-    
-    @app.route('/recipe/edit/<int:id>', methods=['GET', 'POST'])
-    def edit_recipe(id):
-        recipe = Recipe.query.filter(Recipe.id==id).first()
-
-        if request.method == 'POST':
-            form = EditRecipeForm(formdata=request.form, obj=recipe)
-            form.populate_obj(recipe)
-            db.session.commit()
-            flash('Рецепт успешно обновлён!')
-            return redirect(url_for('index'))
-        form = EditRecipeForm(obj=recipe)
-        return render_template('edit_recipe.html', recipe=recipe, form=form)
     
     @app.route('/recipe/delete/<int:id>')
     def recipe_delete(id):
@@ -101,12 +73,5 @@ def create_app():
             print(type(search_results))
         return render_template('search_result.html', search_results=search_results)
 
-    @app.route('/admin')
-    @login_required
-    def admin_index():
-        if current_user.is_admin:
-            return 'Привет, админ!'
-        else:
-            return 'Доступ закрыт.'
 
     return app

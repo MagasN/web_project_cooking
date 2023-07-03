@@ -1,5 +1,4 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
-from app.forms import AddRecipeForm, EditRecipeForm
 from flask_login import LoginManager, current_user, login_required
 
 from app.forms import AddRecipeForm
@@ -41,7 +40,7 @@ def create_app():
         print(recipe)
         return render_template('recipe_page.html', recipe=recipe)
     
-    @app.route('/recipe/add')
+    @app.route('/recipes/add')
     def add_recipe():
         # Нужно доделать
         add_recipe_form = AddRecipeForm()
@@ -63,19 +62,6 @@ def create_app():
             return redirect(url_for('index'))
         flash('Неправильно заполнена форма!')
         return redirect(url_for('add_recipe'))
-    
-    @app.route('/recipe/edit/<int:id>', methods=['GET', 'POST'])
-    def edit_recipe(id):
-        recipe = Recipe.query.filter(Recipe.id==id).first()
-
-        if request.method == 'POST':
-            form = EditRecipeForm(formdata=request.form, obj=recipe)
-            form.populate_obj(recipe)
-            db.session.commit()
-            flash('Рецепт успешно обновлён!')
-            return redirect(url_for('index'))
-        form = EditRecipeForm(obj=recipe)
-        return render_template('edit_recipe.html', recipe=recipe, form=form)
     
     @app.route('/recipe/delete/<int:id>')
     def recipe_delete(id):

@@ -1,8 +1,11 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
+<<<<<<< HEAD
 from app.forms import AddRecipeForm, EditRecipeForm
+=======
 from flask_login import LoginManager, current_user, login_required
 
 from app.forms import AddRecipeForm
+>>>>>>> develop
 from app.model import db, Recipe
 
 from app.model import User
