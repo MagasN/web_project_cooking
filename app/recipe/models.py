@@ -1,7 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from app.user.models import User
 
-db = SQLAlchemy()
+from app.model import db
     
 class Comment(db.Model):
     __tablename__ = 'comments'

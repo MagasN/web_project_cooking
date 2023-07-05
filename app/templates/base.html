@@ -53,7 +53,7 @@
                 <a class="dropdown-item" href="/recipes/my">Мои рецепты</a>
               </li>
               <li>
-                <a class="dropdown-item" href="{{ url_for('add_recipe') }}"
+                <a class="dropdown-item" href="{{ url_for('recipe.add_recipe') }}"
                   >Добавить рецепт</a
                 >
               </li>
@@ -83,7 +83,7 @@
               </li>
               <li>
                 <a
-                  href="{{ url_for('top_recipes') }}"
+                  href="{{ url_for('recipe.top_recipes') }}"
                   class="nav-link link-body-emphasis"
                   >Топ</a
                 >
@@ -91,7 +91,7 @@
               <hr />
               <li>
                 <a
-                  href="{{ url_for('search') }}"
+                  href="{{ url_for('recipe.search') }}"
                   class="nav-link link-body-emphasis"
                   >Поиск</a
                 >

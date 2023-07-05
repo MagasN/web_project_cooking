@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    <form class="row" action="{{ url_for('search_results') }}" method="GET">
+                    <form class="row" action="{{ url_for('recipe.search_results') }}" method="GET">
                         <div class="col-auto">
                             <input type="text" class="form-control" placeholder="Поиск" name="q" value="{{ request.args.get('q', '') }}">
                         </div>

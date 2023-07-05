@@ -35,8 +35,8 @@
                 <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
                 <!-- Здесь нужно подставить автора по user_id рецепта -->
                 <span>Автор рецепта: Вася Пупкин</span>
-                <a href="/recipe/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
-                <a href="/recipe/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
+                <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
+                <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
             </div>
         </div>
     </div>

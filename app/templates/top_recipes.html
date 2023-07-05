@@ -14,7 +14,7 @@
     <div class="rounded-1 p-1">
         <div class="card mb-3">
             <div class="card-header">
-                <h5><a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a></h5>
+                <h5><a href="/recipes/{{ recipe.id }}">{{ recipe.title }}</a></h5>
                 <span>Автор: Вася Пупкин</span>
             </div>
             <div class="card-body">
@@ -23,9 +23,9 @@
             </div>
             <div class="card-footer text-body-secondary">
                 <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
-                <a href="/recipe/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
-                <a href="/recipe/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
-                <a href="/recipe/{{ recipe.id }}" class="btn btn-primary">Подробнее</a>
+                <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
+                <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
+                <a href="/recipes/{{ recipe.id }}" class="btn btn-primary">Подробнее</a>
             </div>
         </div>
     </div>

@@ -3,9 +3,8 @@ from flask_login import current_user, login_user, logout_user
 from getpass import getpass
 
 from app.user.forms import LoginForm, RegisterForm
-
-# from app.user.model import User
-from app.model import User, db
+from app.user.models import User
+from app.model import db
 
 blueprint = Blueprint('user', __name__, url_prefix='/users')
 
@@ -58,7 +57,6 @@ def process_register():
     
     flash('Пароли не совпадают')
     return redirect(url_for('user.register'))
-
 
 @blueprint.route('/logout')
 def logout():
