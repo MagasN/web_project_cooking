@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_login import LoginManager, current_user
 
-from app.model import db
+from app.db import db
 
 from app.recipe.models import Recipe
 from app.user.models import User

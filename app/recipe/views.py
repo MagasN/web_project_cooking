@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, flash, url_for, request
 
 from app.recipe.forms import AddRecipeForm, EditRecipeForm
 from app.recipe.models import Comment, Unit, Ingredient, Recipe
-from app.model import db
+from app.db import db
 
 
 blueprint = Blueprint('recipe', __name__, url_prefix='/recipes')
