@@ -1,7 +1,7 @@
 from datetime import datetime
 from app.user.models import User
 
-from app.model import db
+from app.db import db
     
 class Comment(db.Model):
     __tablename__ = 'comments'
