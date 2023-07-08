@@ -29,40 +29,51 @@
               class="d-flex align-items-center link-body-emphasis text-decoration-none"
             >
               <!-- <b>Лого</b> -->
+              <h1>Best cook</h1>
             </a>
           </div>
 
+          <div>
+            {% if current_user.is_authenticated %}
+              <span class="nav-link" style="text-transform:capitalize">{{ current_user.full_name }}</span>
+            {% else %}
+            <a class="nav-link" href="{{ url_for('user.login') }}">Войти</a>
+            {% endif %}
+          </div>
+
           <div class="dropdown text-end">
-            <a
-              href="#"
-              class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="../static/img/no_photo.png"
-                alt="photo"
-                class="rounded-circle"
-                width="64"
-                height="64"
-              />
-            </a>
-            <ul class="dropdown-menu text-small">
-              <li><a class="dropdown-item" href="/profile">Профиль</a></li>
-              <li>
-                <a class="dropdown-item" href="/recipes/my">Мои рецепты</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{{ url_for('add_recipe') }}"
-                  >Добавить рецепт</a
+            {% if current_user.is_authenticated %}
+                <a
+                  href="#"
+                  class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-              </li>
-              <li>
-                <a class="dropdown-item" href="/recipes/favorite">Избранное</a>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="{{ url_for('user.logout') }}">Выход</a></li>
-            </ul>
+                  <img
+                    src="../static/img/no_photo.png"
+                    alt="photo"
+                    class="rounded-circle"
+                    width="64"
+                    height="64"
+                  />
+                </a>
+                <ul class="dropdown-menu text-small">
+                  <li><a class="dropdown-item" href="{{ url_for('user.user', username=current_user.username) }}">Профиль</a></li>
+                  <li>
+                    <a class="dropdown-item" href="/recipes/my">Мои рецепты</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{{ url_for('add_recipe') }}"
+                      >Добавить рецепт</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/recipes/favorite">Избранное</a>
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="{{ url_for('user.logout') }}">Выход</a></li>
+                </ul>
+            {% endif %}
           </div>
         </div>
       </header>

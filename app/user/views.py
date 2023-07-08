@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, flash, url_for, request
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from getpass import getpass
 
 from app.user.forms import LoginForm, RegisterForm
@@ -65,3 +65,10 @@ def logout():
     logout_user()
     flash('Возвращайся!')
     return redirect(url_for('index'))
+
+@blueprint.route('/<username>')
+@login_required
+def user(username):
+    title = "Профиль"
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('user_profile.html', user=user, page_title=title)

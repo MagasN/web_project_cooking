@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, SubmitField
+from wtforms import BooleanField, StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
 
 from app.model import User
@@ -18,7 +18,5 @@ class RegisterForm(FlaskForm):
     password2 = PasswordField('Повторите пароль', validators=[DataRequired(), EqualTo('password')], render_kw={"class": "form-control"})
     submit = SubmitField('Зарегистрироваться', render_kw={"class":"btn btn-primary"})
 
-    # def validate_username(self, username):
-    #     user = User.query.filter_by(username=username.data).first()
-    #     if user is not None:
-    #         raise ValidationError('Данное имя уже используется')
+class UserProfile(FlaskForm):
+    submit = SubmitField('Редактировать', render_kw={"class":"btn btn-primary"})

@@ -1,6 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+from hashlib import md5
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String, nullable=False)
     username = db.Column(db.String, unique=True, nullable=False)
-    image_user = db.Column(db.String)
+    image_user = db.Column(db.String, default="../static/img/no_photo.png")
     password = db.Column(db.String)
     role = db.Column(db.String, default='user', index=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -27,6 +27,11 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+    
+    # def avatar(self, size):
+    #     digest = md5(self.username.lower().encode('utf-8')).hexdigest()
+    #     return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+    #         digest, size)
     
     @property
     def is_admin(self):

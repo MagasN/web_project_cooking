@@ -21,7 +21,7 @@ with app.app_context():
         print('Пароли различаются')
         sys.exit(0)
 
-    new_user = User(username=username, full_name= full_name, role='admin')    # Можно переписать, чтобы роль запрашивалась
+    new_user = User(username=username, full_name= full_name, role='admin')
     new_user.set_password(password)
 
     db.session.add(new_user)
