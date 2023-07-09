@@ -27,7 +27,6 @@ def create_app():
 
     @app.route('/')
     def index():
-        # Нужно доделать вывод автора рецепта, дату и т.п.
         recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
         return render_template('index.html', recipes_list=recipes_list)
 

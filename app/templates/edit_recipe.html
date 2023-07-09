@@ -38,6 +38,10 @@
                             {{ form.time_cooking() }}
                             {{ form.time_cooking.label(class_="form-label", for="floatingInput") }}
                         </div>
+                        <div class="input-group mb-3">
+                            {{ form.image_recipe.label(class_="input-group-text", for="inputGroupFile01") }}
+                            {{ form.image_recipe() }}
+                        </div>
                         <p>
                             {{ form.submit() }}
                         </p>
