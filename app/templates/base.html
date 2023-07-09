@@ -50,7 +50,7 @@
             <ul class="dropdown-menu text-small">
               <li><a class="dropdown-item" href="/profile">Профиль</a></li>
               <li>
-                <a class="dropdown-item" href="/recipes/my">Мои рецепты</a>
+                <a class="dropdown-item" href="{{ url_for('recipe.my_recipes') }}">Мои рецепты</a>
               </li>
               <li>
                 <a class="dropdown-item" href="{{ url_for('recipe.add_recipe') }}"
@@ -58,7 +58,7 @@
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="/recipes/favorite">Избранное</a>
+                <a class="dropdown-item" href="{{ url_for('recipe.recipes_favorites') }}">Избранное</a>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li><a class="dropdown-item" href="{{ url_for('user.logout') }}">Выход</a></li>

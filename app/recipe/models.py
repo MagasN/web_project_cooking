@@ -56,4 +56,4 @@ class Recipe(db.Model):
     # ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
 
     def __repr__(self):
-        return f'Recipe id: {self.id}, title: {self.title}'
+        return f'Recipe id: {self.id}, title: {self.title}, img: {self.image_recipe}'
