@@ -161,4 +161,4 @@ cython_debug/
 
 # Custom
 *.db
-config.py
+/app/config.py

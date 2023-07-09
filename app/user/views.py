@@ -2,10 +2,9 @@ from flask import Blueprint, render_template, redirect, flash, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from getpass import getpass
 
-from app.user.forms import LoginForm, RegisterForm
-
-# from app.user.model import User
-from app.model import User, db
+from app.user.forms import LoginForm, RegisterForm, UserProfileForm, EditProfileForm
+from app.user.models import User
+from app.model import db
 
 blueprint = Blueprint('user', __name__, url_prefix='/users')
 
@@ -59,7 +58,6 @@ def process_register():
     flash('Пароли не совпадают')
     return redirect(url_for('user.register'))
 
-
 @blueprint.route('/logout')
 def logout():
     logout_user()
@@ -69,6 +67,15 @@ def logout():
 @blueprint.route('/<username>')
 @login_required
 def user(username):
+    profile_form = UserProfileForm()
     title = "Профиль"
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user_profile.html', user=user, page_title=title)
+    return render_template('user_profile.html', user=user, page_title=title, form=profile_form)
+
+@blueprint.route('/edit/<username>', methods=['GET', 'POST'])
+@login_required
+def edit_profil(username):
+    profile_form = EditProfileForm()
+    title = "Редактирование профиля"
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('edit_user_profile.html', user=user, page_title=title, form=profile_form)

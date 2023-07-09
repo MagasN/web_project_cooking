@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
 
-from app.model import User
+# from app.user.models import User
 
 class LoginForm(FlaskForm):
     username = StringField('Никнейм', validators=[DataRequired(), Length(min=5, max=40)], render_kw={"class": "form-control"})
@@ -18,5 +18,9 @@ class RegisterForm(FlaskForm):
     password2 = PasswordField('Повторите пароль', validators=[DataRequired(), EqualTo('password')], render_kw={"class": "form-control"})
     submit = SubmitField('Зарегистрироваться', render_kw={"class":"btn btn-primary"})
 
-class UserProfile(FlaskForm):
+class UserProfileForm(FlaskForm):
     submit = SubmitField('Редактировать', render_kw={"class":"btn btn-primary"})
+
+class EditProfileForm(FlaskForm):
+    full_name = StringField('Фамилия имя', validators=[DataRequired()])
+    submit = SubmitField('Сохранить', render_kw={"class":"btn btn-primary"})

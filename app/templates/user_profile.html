@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="col-md-10 col-sm-12">
-    <div class="posts-header border rounded-3 p-2 ps-4 mb-3">
+    <div class="posts-header border rounded-3 p-2 text-center mb-3">
         <h5>{{ page_title }}</h5>
     </div>
     <img 
@@ -12,8 +12,10 @@
         width="128"
         height="128"
     />
-    <b>Юзернейм: {{ current_user.username }}</b>
+    <p><b>Юзернейм: {{ current_user.username }}</b></p>
     <p><b>Фамилия имя:</b>
     <b style="text-transform:capitalize"> {{ current_user.full_name }}</b></p>
+
+    <p><a href="{{ url_for('user.edit_profil', username=current_user.username) }}">{{ form.submit() }}</a></p>
 </div>
 {% endblock %}

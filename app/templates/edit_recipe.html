@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Редактирование рецепта
+{% endblock %}
+
+{% block content %}
+<div class="col-md-10 col-sm-12">
+    <div class="posts-header border rounded-3 p-2 text-center mb-3">
+        <h5>Редактирование рецепта</h5>
+    </div>
+    <div class="rounded-1 p-1">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Форма</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <form action="{{ url_for('recipe.edit_recipe', id=recipe.id) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        <div class="form-floating mb-3">
+                            {{ form.title() }}
+                            {{ form.title.label(for="floatingInput") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.decription_recipe() }}
+                            {{ form.decription_recipe.label(class_="form-label", for="floatingInput") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.steps_recipe() }}
+                            {{ form.steps_recipe.label(class_="form-label", for="floatingTextarea2") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.servings() }}
+                            {{ form.servings.label(class_="form-label", for="floatingInput") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.time_cooking() }}
+                            {{ form.time_cooking.label(class_="form-label", for="floatingInput") }}
+                        </div>
+                        <p>
+                            {{ form.submit() }}
+                        </p>
+                    </form>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

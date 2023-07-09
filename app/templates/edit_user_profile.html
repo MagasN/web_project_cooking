@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="col-md-10 col-sm-12">
+    <div class="posts-header border rounded-3 p-2 text-center mb-3">
+        <h5>{{ page_title }}</h5>
+    </div>
+    <p><b>Юзернейм: {{ current_user.username }}</b></p>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.full_name.label }}<br>
+            {{ form.full_name() }}<br>
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
