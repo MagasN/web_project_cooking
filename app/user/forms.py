@@ -22,5 +22,5 @@ class UserProfileForm(FlaskForm):
     submit = SubmitField('Редактировать', render_kw={"class":"btn btn-primary"})
 
 class EditProfileForm(FlaskForm):
-    full_name = StringField('Фамилия имя', validators=[DataRequired()])
+    full_name = StringField('Фамилия имя', validators=[DataRequired()], render_kw={"class": "form-control"})
     submit = SubmitField('Сохранить', render_kw={"class":"btn btn-primary"})

@@ -67,15 +67,23 @@ def logout():
 @blueprint.route('/<username>')
 @login_required
 def user(username):
-    profile_form = UserProfileForm()
+    form = UserProfileForm()
     title = "Профиль"
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user_profile.html', user=user, page_title=title, form=profile_form)
+    return render_template('user_profile.html', user=user, page_title=title, form=form)
 
 @blueprint.route('/edit/<username>', methods=['GET', 'POST'])
 @login_required
-def edit_profil(username):
-    profile_form = EditProfileForm()
+def edit_profile(username):
+    form = EditProfileForm()
     title = "Редактирование профиля"
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('edit_user_profile.html', user=user, page_title=title, form=profile_form)
+    
+    if form.validate_on_submit():
+        current_user.full_name = form.full_name.data
+        db.session.commit()
+        flash('Ваши изменения были сохранены.')
+        return redirect(url_for('user.user', username=current_user.username))
+    elif request.method == 'GET':
+        form.full_name.data = current_user.full_name
+    return render_template('edit_user_profile.html', user=user, page_title=title, form=form)
