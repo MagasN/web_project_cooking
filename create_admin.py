@@ -21,8 +21,9 @@ with app.app_context():
     if not password == password2:
         print('Пароли различаются')
         sys.exit(0)
+    img_admin = "../static/img/admin.png"
 
-    new_user = User(username=username, full_name= full_name, role='admin')    # Можно переписать, чтобы роль запрашивалась
+    new_user = User(username=username, full_name= full_name, role='admin', image_user=img_admin)
     new_user.set_password(password)
 
     db.session.add(new_user)

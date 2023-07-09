@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="col-md-10 col-sm-12">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-warning" role="alert">
+            {% for message in messages %}
+                {{ message }}<br>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+    <div class="posts-header border rounded-3 p-2 text-center mb-3">
+        <h5>{{ page_title }}</h5>
+    </div>
+    <img 
+        src="{{ current_user.image_user }}"                
+        alt="photo"
+        class="rounded-circle"
+        width="128"
+        height="128"
+    />
+    <p><b>Юзернейм: {{ current_user.username }}</b></p>
+    <p><b>Фамилия имя:</b>
+    <b style="text-transform:capitalize"> {{ current_user.full_name }}</b></p>
+    
+    {% if user == current_user %}
+        <p><a href="{{ url_for('user.edit_profile', username=current_user.username) }}">{{ form.submit() }}</a></p>
+    {% endif %}
+    
+</div>
+{% endblock %}
