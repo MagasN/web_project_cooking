@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, flash, url_for, request
 import os
 import pathlib
+import uuid
 from werkzeug.utils import secure_filename
 from app.recipe.forms import AddRecipeForm, EditRecipeForm
 from app.recipe.models import Comment, Unit, Ingredient, Recipe
@@ -30,6 +31,7 @@ def process_add_recipe():
     if form.validate_on_submit():
         if form.image_recipe.data:
             file = form.image_recipe.data
+            print(file)
             file.save(os.path.join(pathlib.Path(__file__).parent.absolute().parent, 'static', 'img_recipe', secure_filename(file.filename)))
         new_recipe = Recipe(title=form.title.data,
                             image_recipe=form.image_recipe.data.filename,
@@ -49,6 +51,8 @@ def process_add_recipe():
 def edit_recipe(id):
     recipe = Recipe.query.filter(Recipe.id==id).first()
     if request.method == 'POST':
+        print(request.endpoint)
+        
         form = EditRecipeForm(formdata=request.form, obj=recipe)
         form.populate_obj(recipe)
         db.session.commit()
