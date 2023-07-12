@@ -92,7 +92,6 @@ def search_results():
         search_results = Recipe.query.filter(Recipe.title.contains(q) | Recipe.decription_recipe.contains(q)).all()
         print(type(search_results))
     return render_template('search_result.html', search_results=search_results)
-
 @blueprint.route('/favorite')
 def recipes_favorites():
     return render_template('favorites_recipes.html')
