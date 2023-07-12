@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, IntegerField, FileField, SubmitField
-from wtforms.validators import DataRequired, Length, Regexp, NumberRange
+from wtforms.validators import DataRequired, Length, NumberRange
 
 
 class AddRecipeForm(FlaskForm):
@@ -11,7 +11,7 @@ class AddRecipeForm(FlaskForm):
     servings = IntegerField('Количество порций', validators=[DataRequired(), NumberRange(min=1)], render_kw={'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'Количество порций'})
     time_cooking = IntegerField('Время приготовления', validators=[DataRequired(), NumberRange(min=1)], render_kw={'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'Время приготовления'})
     # ingredient_id = IntegerField('Ингредиенты', validators=[DataRequired()])
-    submit = SubmitField('Добавить')
+    submit = SubmitField('Добавить', render_kw={'class': 'btn btn-primary'})
 
 class EditRecipeForm(FlaskForm):
     title = StringField('Название', validators=[DataRequired(), Length(min=4, max=100)], render_kw={'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'Название'})

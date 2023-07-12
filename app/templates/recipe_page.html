@@ -14,11 +14,11 @@
             <div class="card-body row">
                 {% if recipe.image_recipe %}
                 <div class="col-3">
-                    <img class="img-thumbnail rounded float-start me-4" src="../static/img_recipe/{{ recipe.image_recipe }}" alt="{{ recipe.title }}" width="280px" height="200px">
+                    <img class="img-thumbnail rounded float-start me-4" src="/static/uploads/{{ recipe.image_recipe }}" alt="{{ recipe.title }}" width="280px" height="200px">
                 </div>
                 {% else %}
                 <div class="col-3">
-                    <img class="img-thumbnail rounded float-start me-4" src="../static/img_recipe/no_photo_recipe.png" alt="{{ recipe.title }}" width="280px" height="200px">
+                    <img class="img-thumbnail rounded float-start me-4" src="/static/uploads/no_photo_recipe.png" alt="{{ recipe.title }}" width="280px" height="200px">
                 </div>
                 {% endif %}
                 <div class="col-6">

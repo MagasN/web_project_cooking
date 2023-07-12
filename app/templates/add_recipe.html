@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    <form action="{{ url_for('recipe.process_add_recipe') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ url_for('.add_recipe') }}" method="post" enctype="multipart/form-data">
                         {{ form.hidden_tag() }}
                         <div class="form-floating mb-3">
                             {{ form.title() }}
@@ -43,7 +43,7 @@
                             {{ form.image_recipe() }}
                         </div>
                         <p>
-                            {{ form.submit(class_="btn btn-primary") }}
+                            {{ form.submit() }}
                         </p>
                     </form>
                 </p>
