@@ -27,7 +27,6 @@ def allowed_file(filename):
 def add_recipe():
     form = AddRecipeForm()
     if form.validate_on_submit() and request.method == 'POST':
-        print(form.image_recipe.data)
         file = form.image_recipe.data
         filename = secure_filename(file.filename)
         if file:
@@ -55,17 +54,31 @@ def add_recipe():
 @blueprint.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_recipe(id):
     recipe = Recipe.query.filter(Recipe.id==id).first()
-    print(recipe)
     form = EditRecipeForm()
     if form.validate_on_submit() and request.method == 'POST':
-        print(form.image_recipe.data)
-        form.populate_obj(recipe)
+        recipe.title = form.title.data 
+        recipe.decription_recipe = form.decription_recipe.data
+        recipe.steps_recipe = form.steps_recipe.data
+        recipe.servings = form.servings.data
+        recipe.time_cooking = form.time_cooking.data
+        
+        file = form.image_recipe.data
+        print(f"{file=} {type(file)=}")
+        filename = secure_filename(file.filename)
+        if file:
+            if allowed_file(filename):
+                file.save(os.path.join(Config.UPLOAD_FOLDER, filename))
+                recipe.image_recipe = filename
+            else:
+                flash('Разрешенные типы файлов - png, jpg, jpeg, gif. К сожалению рецепт не добавлен, попробуйте ещё раз.')
+                return redirect(url_for('recipe.edit_recipe', id=id))
         try:
             db.session.commit()
             flash('Рецепт успешно обновлён!')
             return redirect('/')
-        except:
-            return "При редактировании рецепта произошла ошибка"
+        except Exception as exc:
+            print("Error:", exc)
+            return f"При редактировании рецепта произошла ошибка."
     form = EditRecipeForm(obj=recipe)
     return render_template('edit_recipe.html', recipe=recipe, form=form)
     

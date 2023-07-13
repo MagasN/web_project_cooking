@@ -15,9 +15,9 @@ class AddRecipeForm(FlaskForm):
 
 class EditRecipeForm(FlaskForm):
     title = StringField('Название', validators=[DataRequired(), Length(min=4, max=100)], render_kw={'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'Название'})
-    image_recipe = FileField('Фото блюда', render_kw={'class': 'input-group-text', 'id': 'inputGroupFile01'})
+    image_recipe = FileField('Фото блюда', render_kw={'class': 'input-group-text', 'id': 'inputGroupFile02'})
     decription_recipe = StringField('Краткое описание', validators=[Length(max=200)], render_kw={'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'Краткое описание'})
-    steps_recipe = TextAreaField('Шаги приготовления', validators=[DataRequired()], render_kw={'class': 'form-control', 'id': 'floatingTextarea2', 'placeholder': 'Шаги приготовления', 'style': 'height: 200px'})
+    steps_recipe = TextAreaField('Шаги приготовления', validators=[DataRequired()], render_kw={'class': 'form-control', 'id': 'floatingTextarea3', 'placeholder': 'Шаги приготовления', 'style': 'height: 200px'})
     servings = IntegerField('Количество порций', validators=[DataRequired(), NumberRange(min=1)], render_kw={'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'Количество порций'})
     time_cooking = IntegerField('Время приготовления', validators=[DataRequired(), NumberRange(min=1)], render_kw={'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'Время приготовления'})
     # ingredient_id = IntegerField('Ингредиенты', validators=[DataRequired()])
