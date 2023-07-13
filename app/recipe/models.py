@@ -1,7 +1,7 @@
 from datetime import datetime
 from app.user.models import User
 
-from app.model import db
+from app.db import db
     
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -43,6 +43,7 @@ class Recipe(db.Model):
     image_recipe = db.Column(db.String)
     decription_recipe = db.Column(db.String)
     steps_recipe = db.Column(db.Text, nullable=False)
+    ingredients = db.Column(db.Text, nullable=False) # временное поле пока не реализовано задуманное
     positive_feedback = db.Column(db.Integer)
     negative_feedback = db.Column(db.Integer)
     servings = db.Column(db.Integer, nullable=False)
@@ -56,4 +57,4 @@ class Recipe(db.Model):
     # ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
 
     def __repr__(self):
-        return f'Recipe id: {self.id}, title: {self.title}'
+        return f'Recipe id: {self.id}, title: {self.title}, img: {self.image_recipe}'

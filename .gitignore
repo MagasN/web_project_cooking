@@ -161,4 +161,4 @@ cython_debug/
 
 # Custom
 *.db
-/app/config.py
+app/static/uploads/

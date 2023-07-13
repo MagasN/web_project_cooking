@@ -1,15 +1,16 @@
 from flask import Blueprint, render_template, redirect, flash, url_for, request
-
+import os
+from werkzeug.utils import secure_filename
 from app.recipe.forms import AddRecipeForm, EditRecipeForm
-from app.recipe.models import Comment, Unit, Ingredient, Recipe
-from app.model import db
+from app.recipe.models import Recipe
+from app.db import db
+from app.config import Config
 
 
 blueprint = Blueprint('recipe', __name__, url_prefix='/recipes')
 
 @blueprint.route('/top')
 def top_recipes():
-    # Нужно доделать вывод автора рецепта, дату и т.п.
     recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
     return render_template('top_recipes.html', recipes_list=recipes_list)
     
@@ -17,40 +18,69 @@ def top_recipes():
 def recipe_page(id):
     recipe = Recipe.query.get(id)
     return render_template('recipe_page.html', recipe=recipe)
-    
-@blueprint.route('/add')
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in Config.ALLOWED_EXTENSIONS
+
+@blueprint.route('/add', methods=['POST', 'GET'])
 def add_recipe():
-    # Нужно доделать
-    add_recipe_form = AddRecipeForm()
-    return render_template('add_recipe.html', form=add_recipe_form)
-    
-@blueprint.route('/process-add-recipe', methods=['POST'])
-def process_add_recipe():
     form = AddRecipeForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit() and request.method == 'POST':
+        file = form.image_recipe.data
+        filename = secure_filename(file.filename)
+        if file:
+            if allowed_file(filename):
+                file.save(os.path.join(Config.UPLOAD_FOLDER, filename))
+            else:
+                flash('Разрешенные типы файлов - png, jpg, jpeg, gif. К сожалению рецепт не добавлен, попробуйте ещё раз.')
+                return redirect(url_for('.add_recipe'))
         new_recipe = Recipe(title=form.title.data,
-                            decription_recipe=form.decription_recipe.data,
-                            steps_recipe=form.steps_recipe.data,
-                            servings=form.servings.data,
-                            time_cooking=form.time_cooking.data
+                            image_recipe = filename,
+                            decription_recipe = form.decription_recipe.data,
+                            ingredients = form.ingredients.data,
+                            steps_recipe = form.steps_recipe.data,
+                            servings = form.servings.data,
+                            time_cooking = form.time_cooking.data
                             )
-        db.session.add(new_recipe)
-        db.session.commit()
-        flash('Рецепт успешно добавлен!')
-        return redirect(url_for('index'))
-    flash('Неправильно заполнена форма!')
-    return redirect(url_for('add_recipe'))
+        try:
+            db.session.add(new_recipe)
+            db.session.commit()
+            flash('Рецепт успешно добавлен!')
+            return redirect(url_for('index'))
+        except Exception as exc:
+            print("Error:", exc)
+            return f"При добавлении рецепта произошла ошибка."
+    return render_template('add_recipe.html', form=form)
     
 @blueprint.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_recipe(id):
     recipe = Recipe.query.filter(Recipe.id==id).first()
-
-    if request.method == 'POST':
-        form = EditRecipeForm(formdata=request.form, obj=recipe)
-        form.populate_obj(recipe)
-        db.session.commit()
-        flash('Рецепт успешно обновлён!')
-        return redirect(url_for('index'))
+    form = EditRecipeForm()
+    if form.validate_on_submit() and request.method == 'POST':
+        recipe.title = form.title.data 
+        recipe.decription_recipe = form.decription_recipe.data
+        recipe.ingredients = form.ingredients.data
+        recipe.steps_recipe = form.steps_recipe.data
+        recipe.servings = form.servings.data
+        recipe.time_cooking = form.time_cooking.data
+        
+        file = form.image_recipe.data
+        filename = secure_filename(file.filename)
+        if file:
+            if allowed_file(filename):
+                file.save(os.path.join(Config.UPLOAD_FOLDER, filename))
+                recipe.image_recipe = filename
+            else:
+                flash('Разрешенные типы файлов - png, jpg, jpeg, gif. К сожалению фото рецепта не загружено, попробуйте ещё раз.')
+                return redirect(url_for('.edit_recipe', id=id))
+        try:
+            db.session.commit()
+            flash('Рецепт успешно обновлён!')
+            return redirect('/')
+        except Exception as exc:
+            print("Error:", exc)
+            return f"При редактировании рецепта произошла ошибка."
     form = EditRecipeForm(obj=recipe)
     return render_template('edit_recipe.html', recipe=recipe, form=form)
     
@@ -77,4 +107,11 @@ def search_results():
         search_results = Recipe.query.filter(Recipe.title.contains(q) | Recipe.decription_recipe.contains(q)).all()
         print(type(search_results))
     return render_template('search_result.html', search_results=search_results)
+@blueprint.route('/favorite')
+def recipes_favorites():
+    return render_template('favorites_recipes.html')
+
+@blueprint.route('/my')
+def my_recipes():
+    return render_template('my_recipes.html')
     

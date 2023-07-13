@@ -4,7 +4,7 @@ from getpass import getpass
 
 from app.user.forms import LoginForm, RegisterForm, UserProfileForm, EditProfileForm
 from app.user.models import User
-from app.model import db
+from app.db import db
 
 blueprint = Blueprint('user', __name__, url_prefix='/users')
 
