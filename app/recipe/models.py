@@ -43,6 +43,7 @@ class Recipe(db.Model):
     image_recipe = db.Column(db.String)
     decription_recipe = db.Column(db.String)
     steps_recipe = db.Column(db.Text, nullable=False)
+    ingredients = db.Column(db.Text, nullable=False) # временное поле пока не реализовано задуманное
     positive_feedback = db.Column(db.Integer)
     negative_feedback = db.Column(db.Integer)
     servings = db.Column(db.Integer, nullable=False)

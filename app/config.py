@@ -11,5 +11,5 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
     REMEMBER_COOKIE_DURATION = timedelta(days=5)
     UPLOAD_FOLDER = os.path.join(basedir, 'static/uploads')
-    MAX_CONTENT_LENGTH = 10 * 1000 * 1000
+    MAX_CONTENT_LENGTH = 8 * 1000 * 1000
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}

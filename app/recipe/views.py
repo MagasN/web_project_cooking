@@ -34,21 +34,23 @@ def add_recipe():
                 file.save(os.path.join(Config.UPLOAD_FOLDER, filename))
             else:
                 flash('Разрешенные типы файлов - png, jpg, jpeg, gif. К сожалению рецепт не добавлен, попробуйте ещё раз.')
-                return redirect(url_for('index'))
+                return redirect(url_for('.add_recipe'))
         new_recipe = Recipe(title=form.title.data,
-                            image_recipe=filename,
-                            decription_recipe=form.decription_recipe.data,
-                            steps_recipe=form.steps_recipe.data,
-                            servings=form.servings.data,
-                            time_cooking=form.time_cooking.data
+                            image_recipe = filename,
+                            decription_recipe = form.decription_recipe.data,
+                            ingredients = form.ingredients.data,
+                            steps_recipe = form.steps_recipe.data,
+                            servings = form.servings.data,
+                            time_cooking = form.time_cooking.data
                             )
         try:
             db.session.add(new_recipe)
             db.session.commit()
             flash('Рецепт успешно добавлен!')
             return redirect(url_for('index'))
-        except:
-            return "При добавлении рецепта произошла ошибка"
+        except Exception as exc:
+            print("Error:", exc)
+            return f"При добавлении рецепта произошла ошибка."
     return render_template('add_recipe.html', form=form)
     
 @blueprint.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -58,6 +60,7 @@ def edit_recipe(id):
     if form.validate_on_submit() and request.method == 'POST':
         recipe.title = form.title.data 
         recipe.decription_recipe = form.decription_recipe.data
+        recipe.ingredients = form.ingredients.data
         recipe.steps_recipe = form.steps_recipe.data
         recipe.servings = form.servings.data
         recipe.time_cooking = form.time_cooking.data
@@ -69,8 +72,8 @@ def edit_recipe(id):
                 file.save(os.path.join(Config.UPLOAD_FOLDER, filename))
                 recipe.image_recipe = filename
             else:
-                flash('Разрешенные типы файлов - png, jpg, jpeg, gif. К сожалению рецепт не добавлен, попробуйте ещё раз.')
-                return redirect(url_for('recipe.edit_recipe', id=id))
+                flash('Разрешенные типы файлов - png, jpg, jpeg, gif. К сожалению фото рецепта не загружено, попробуйте ещё раз.')
+                return redirect(url_for('.edit_recipe', id=id))
         try:
             db.session.commit()
             flash('Рецепт успешно обновлён!')
