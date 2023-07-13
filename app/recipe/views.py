@@ -63,7 +63,6 @@ def edit_recipe(id):
         recipe.time_cooking = form.time_cooking.data
         
         file = form.image_recipe.data
-        print(f"{file=} {type(file)=}")
         filename = secure_filename(file.filename)
         if file:
             if allowed_file(filename):
