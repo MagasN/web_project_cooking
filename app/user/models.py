@@ -16,12 +16,6 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String, index=True, default='User')
     created_at = db.Column(db.DateTime)
     is_deleted = db.Column(db.Boolean)
-    recipe_id = db.Column(
-        db.Integer,
-        db.ForeignKey('recipes.id', ondelete='CASCADE'),
-        index=True
-    )
-    recipe = relationship('Recipe', backref='comments')
     
     def __repr__(self):
         return f'<User id: {self.id}, name: {self.full_name}>'

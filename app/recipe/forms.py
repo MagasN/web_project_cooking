@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, Length, Regexp, NumberRange
 
 
 class AddRecipeForm(FlaskForm):
+    user_id = HiddenField('ID пользователя', validators=[DataRequired()])
     title = StringField('Название', validators=[DataRequired(), Length(min=4, max=100)], render_kw={'placeholder': 'Название'})
     # image_recipe = FileField('Фото блюда', validators=[Regexp('[^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$')])
     decription_recipe = StringField('Краткое описание', validators=[Length(max=200)], render_kw={'placeholder': 'Краткое описание'})

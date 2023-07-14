@@ -51,6 +51,7 @@ def add_recipe():
     return render_template('add_recipe.html', form=add_recipe_form)
     
 @blueprint.route('/process-add-recipe', methods=['POST'])
+@login_required
 def process_add_recipe():
     form = AddRecipeForm()
     if form.validate_on_submit():
@@ -58,7 +59,8 @@ def process_add_recipe():
                             decription_recipe=form.decription_recipe.data,
                             steps_recipe=form.steps_recipe.data,
                             servings=form.servings.data,
-                            time_cooking=form.time_cooking.data
+                            time_cooking=form.time_cooking.data,
+                            user_id=current_user.id
                             )
         db.session.add(new_recipe)
         db.session.commit()
@@ -81,6 +83,7 @@ def edit_recipe(id):
     return render_template('edit_recipe.html', recipe=recipe, form=form)
     
 @blueprint.route('/delete/<int:id>')
+@login_required
 def recipe_delete(id):
     recipe = Recipe.query.get_or_404(id)
     try:

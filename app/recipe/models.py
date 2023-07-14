@@ -68,11 +68,15 @@ class Recipe(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_deleted = db.Column(db.Boolean)
     is_archived = db.Column(db.Boolean) 
-    archived_at = db.Column(db.DateTime) 
-
+    archived_at = db.Column(db.DateTime)
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id', ondelete='CASCADE'),
+        index=True
+        ) 
     # ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
     
-    user = relationship('User', backref='recipes')
+    user = relationship('User', backref='recipe')
 
     def comments_count(self):
         return Comment.query.filter(Comment.recipe_id == self.id).count()
