@@ -17,30 +17,38 @@
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    <form action="{{ url_for('recipe.process_add_recipe') }}" method="post">
+                    <form action="{{ url_for('.add_recipe') }}" method="post" enctype="multipart/form-data">
                         {{ form.hidden_tag() }}
                         <div class="form-floating mb-3">
-                            {{ form.title(class_="form-control", id_="floatingInput") }}
+                            {{ form.title() }}
                             {{ form.title.label(for="floatingInput") }}
                         </div>
                         <div class="form-floating mb-3">
-                            {{ form.decription_recipe(class_="form-control", id_="floatingInput") }}
+                            {{ form.decription_recipe() }}
                             {{ form.decription_recipe.label(class_="form-label", for="floatingInput") }}
                         </div>
                         <div class="form-floating mb-3">
-                            {{ form.steps_recipe(class_="form-control", id_="floatingTextarea2") }}
-                            {{ form.steps_recipe.label(class_="form-label", for="floatingTextarea2") }}
+                            {{ form.ingredients() }}
+                            {{ form.ingredients.label(class_="form-label", for="floatingTextarea2") }}
                         </div>
                         <div class="form-floating mb-3">
-                            {{ form.servings(class_="form-control", id_="floatingInput") }}
+                            {{ form.steps_recipe() }}
+                            {{ form.steps_recipe.label(class_="form-label", for="floatingTextarea3") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.servings() }}
                             {{ form.servings.label(class_="form-label", for="floatingInput") }}
                         </div>
                         <div class="form-floating mb-3">
-                            {{ form.time_cooking(class_="form-control", id_="floatingInput") }}
+                            {{ form.time_cooking() }}
                             {{ form.time_cooking.label(class_="form-label", for="floatingInput") }}
                         </div>
+                        <div class="input-group mb-3">
+                            {{ form.image_recipe.label(class_="input-group-text", for="inputGroupFile01") }}
+                            {{ form.image_recipe() }}
+                        </div>
                         <p>
-                            {{ form.submit(class_="btn btn-primary") }}
+                            {{ form.submit() }}
                         </p>
                     </form>
                 </p>

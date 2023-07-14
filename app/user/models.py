@@ -2,8 +2,7 @@ from flask_login import UserMixin
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
-from app.model import db
+from app.db import db
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'

@@ -12,11 +12,18 @@
     <div class="rounded-1 p-1">
         <div class="card mb-3">
             <div class="card-body row">
-
-                <div class="col-3"><img class="img-thumbnail rounded float-start me-4" src="../static/img/posts_img.png" alt="posts_img" width="280px" height="200px"></div>
+                {% if recipe.image_recipe %}
+                <div class="col-3">
+                    <img class="img-thumbnail rounded float-start me-4" src="/static/uploads/{{ recipe.image_recipe }}" alt="{{ recipe.title }}" width="280px" height="200px">
+                </div>
+                {% else %}
+                <div class="col-3">
+                    <img class="img-thumbnail rounded float-start me-4" src="/static/img/no_photo_recipe.png" alt="{{ recipe.title }}" width="280px" height="200px">
+                </div>
+                {% endif %}
                 <div class="col-6">
-                    Ингредиенты:
-                    <!-- Вывести циклом ingredient_id -->
+                    <h5>Ингредиенты:</h5>
+                    <p>{{ recipe.ingredients }}</p>
                 </div>
                 <div class="col-3">
                     Количество порций: {{ recipe.servings }}<br>

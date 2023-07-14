@@ -1,13 +1,14 @@
 from flask import Flask, render_template
-from flask_login import LoginManager, current_user, login_required
+from flask_login import LoginManager
 
-from app.model import db
+from app.db import db
 from app.config import Config
 
 from app.recipe.models import Recipe
 from app.user.models import User
-from app.user.views import blueprint as user_blueprint
-from app.recipe.views import blueprint as recipe_blueprint
+from app.user.views import blueprint as user_bp
+from app.recipe.views import blueprint as recipe_bp
+from app.admin.views import blueprint as admin_bp
 
 def create_app():
     app = Flask(__name__)
@@ -17,8 +18,9 @@ def create_app():
     login_manager = LoginManager()
     login_manager.init_app(app)
     login_manager.login_view = 'user.login'
-    app.register_blueprint(user_blueprint)
-    app.register_blueprint(recipe_blueprint)
+    app.register_blueprint(user_bp)
+    app.register_blueprint(recipe_bp)
+    app.register_blueprint(admin_bp)
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -26,16 +28,7 @@ def create_app():
 
     @app.route('/')
     def index():
-        # Нужно доделать вывод автора рецепта, дату и т.п.
         recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
         return render_template('index.html', recipes_list=recipes_list)
-
-    @app.route('/admin')
-    @login_required
-    def admin_index():
-        if current_user.is_admin:
-            return 'Привет, админ!'
-        else:
-            return 'Доступ закрыт.'
 
     return app

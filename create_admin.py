@@ -2,7 +2,7 @@ from getpass import getpass
 import sys
 
 from app import create_app
-from app.model import db
+from app.db import db
 from app.user.models import User
 
 app = create_app()

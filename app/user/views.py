@@ -7,9 +7,10 @@ from werkzeug.utils import secure_filename
 
 from app.user.forms import LoginForm, RegisterForm, UserProfileForm, EditProfileForm
 from app.user.models import User
-from app.model import db
+from app.db import db
 from app.config import Config
 from app.utils import get_redirect_target
+
 
 blueprint = Blueprint('user', __name__, url_prefix='/users')
 
