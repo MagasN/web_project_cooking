@@ -10,6 +10,7 @@ from app.user.views import blueprint as user_bp
 from app.recipe.views import blueprint as recipe_bp
 from app.admin.views import blueprint as admin_bp
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -17,7 +18,7 @@ def create_app():
 
     login_manager = LoginManager()
     login_manager.init_app(app)
-    login_manager.login_view = 'user.login'
+    login_manager.login_view = "user.login"
     app.register_blueprint(user_bp)
     app.register_blueprint(recipe_bp)
     app.register_blueprint(admin_bp)
@@ -26,9 +27,9 @@ def create_app():
     def load_user(user_id):
         return User.query.get(user_id)
 
-    @app.route('/')
+    @app.route("/")
     def index():
         recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
-        return render_template('index.html', recipes_list=recipes_list)
+        return render_template("index.html", recipes_list=recipes_list)
 
     return app
