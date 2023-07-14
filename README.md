@@ -25,7 +25,7 @@ To run this website locally, make sure you have Python (version 3.10) installed.
 3. Install the necessary dependencies by running: 'pip install -r requirements.txt'.
 4. Database creation: 'python create_db.py'
 5. Start: 'Run.bat'.
-6. Open your browser and visit 'http://localhost:5000' to access the website.
+6. Open your browser and visit 'http://127.0.0.1/:5000' to access the website.
 
 ## License
 
