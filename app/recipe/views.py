@@ -120,7 +120,7 @@ def recipe_delete(id):
     except:
         return 'При удалении рецепта произошла ошибка'
     
-@blueprint.route('/my_recipes')
+@blueprint.route('/my')
 @login_required
 def my_recipes():
     user = Recipe.query.filter(Recipe.user_id == current_user.id).count()
@@ -147,7 +147,4 @@ def search_results():
 def recipes_favorites():
     return render_template('favorites_recipes.html')
 
-@blueprint.route('/my')
-def my_recipes():
-    return render_template('my_recipes.html')
     
