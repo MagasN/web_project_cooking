@@ -9,6 +9,35 @@
     <div class="posts-header border rounded-3 p-2 text-center mb-3">
         <h5>Мои рецепты</h5>
     </div>
-<p class="text-center">Страница в разработке</p>
+    {% include('messages.html') %}
+{% if recipes_list|length > 0 %}
+    {% for recipe in recipes_list if not break %}
+        {% if (recipe.user.id == current_user.id) %}
+            <div class="rounded-1 p-1">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5><a href="/recipes/{{ recipe.id }}">{{ recipe.title }}</a></h5>
+                        <span>Автор: {{recipe.user.full_name}}</span>
+                    </div>
+                    <div class="card-body">
+                        {% if recipe.image_recipe %}
+                            <span><img class="img-thumbnail rounded float-start me-4" src="/static/uploads/{{ recipe.image_recipe }}" alt="{{ recipe.title }}" width="180px" height="100px"></span>
+                        {% else %}
+                            <span><img class="img-thumbnail rounded float-start me-4" src="/static/img/no_photo_recipe.png" alt="{{ recipe.title }}" width="180px" height="100px"></span>
+                        {% endif %}
+                        <p class="card-text">{{ recipe.decription_recipe }}</p>
+                    </div>
+                    <div class="card-footer text-body-secondary">
+                        <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }} | Комментарии: {{ recipe.comments_count() }}</span>
+                        <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
+                        <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
+                        <a href="/recipes/{{ recipe.id }}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
 </div>
 {% endblock %}

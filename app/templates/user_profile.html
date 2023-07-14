@@ -2,18 +2,12 @@
 
 {% block content %}
 <div class="col-md-10 col-sm-12">
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <div class="alert alert-warning" role="alert">
-            {% for message in messages %}
-                {{ message }}<br>
-            {% endfor %}
-        </div>
-        {% endif %}
-    {% endwith %}
     <div class="posts-header border rounded-3 p-2 text-center mb-3">
         <h5>{{ page_title }}</h5>
     </div>
+    
+    {% include('messages.html') %}
+    
     <img 
         src="{{ current_user.image_user }}"                
         alt="photo"

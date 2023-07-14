@@ -5,14 +5,29 @@
     <div class="posts-header border rounded-3 p-2 text-center mb-3">
         <h5>{{ page_title }}</h5>
     </div>
+
+    {% include('messages.html') %}
+
     <p><b>Юзернейм: {{ current_user.username }}</b></p>
-    <form action="" method="post">
+    <form action="{{ url_for('user.edit_profile', username=current_user.username) }}" method='POST' enctype="multipart/form-data">
         {{ form.hidden_tag() }}
+        <img 
+            src="{{ current_user.image_user }}"                
+            alt="photo"
+            class="rounded-circle"
+            width="128"
+            height="128"
+        />
         <p>
             <p><b>Введите новые данные</b></p>
             {{ form.full_name.label }}<br>
             {{ form.full_name() }}<br>
         </p>
+
+        <div class="input-group mb-3">
+            {{ form.image_user.label(class_="input-group-text", for="inputGroupFile02") }}
+            {{ form.image_user() }}
+        </div>
         <p>{{ form.submit() }}</p>
     </form>
 </div>
