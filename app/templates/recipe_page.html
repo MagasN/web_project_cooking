@@ -45,7 +45,7 @@
 
             {% include('messages.html') %}
             
-            <h5><strong>Комментарии:</strong></h5>
+            <h5><strong>Комментарии: {{ recipe.comments_count() }}</strong></h5>
             {% if recipe.comment %}
                 {% for comment in recipe.comment %}
                     <div class="card">

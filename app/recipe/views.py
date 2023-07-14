@@ -12,7 +12,7 @@ blueprint = Blueprint('recipe', __name__, url_prefix='/recipes')
 
 @blueprint.route('/top')
 def top_recipes():
-    # user = User.query.filter_by(id=Recipe.user_id).first_or_404()
+
     # Нужно доделать вывод автора рецепта, дату и т.п.
     recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
     return render_template('top_recipes.html', recipes_list=recipes_list)
@@ -20,9 +20,7 @@ def top_recipes():
 @blueprint.route('/<int:id>')
 def recipe_page(id):
     recipe = Recipe.query.get(id)
-    # user = User.query.filter_by(id=Recipe.user_id).first()
     form = CommentForm(recipe_id = recipe.id)
-
     return render_template('recipe_page.html', recipe=recipe, comment_form=form)
 
 @blueprint.route('/comment', methods=['POST'])
@@ -93,6 +91,12 @@ def recipe_delete(id):
         return redirect('/')
     except:
         return 'При удалении рецепта произошла ошибка'
+    
+@blueprint.route('/my_recipes')
+@login_required
+def my_recipes():
+    recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
+    return render_template('my_recipes.html', recipes_list=recipes_list)
         
 @blueprint.route('/search')
 def search():

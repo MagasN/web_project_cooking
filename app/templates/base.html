@@ -60,12 +60,10 @@
                 <ul class="dropdown-menu text-small">
                   <li><a class="dropdown-item" href="{{ url_for('user.user', username=current_user.username) }}">Профиль</a></li>
                   <li>
-                    <a class="dropdown-item" href="/recipes/my">Мои рецепты</a>
+                    <a class="dropdown-item" href="{{ url_for('recipe.my_recipes') }}">Мои рецепты</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="{{ url_for('recipe.add_recipe') }}"
-                      >Добавить рецепт</a
-                    >
+                    <a class="dropdown-item" href="{{ url_for('recipe.add_recipe') }}">Добавить рецепт</a>
                   </li>
                   <li>
                     <a class="dropdown-item" href="/recipes/favorite">Избранное</a>

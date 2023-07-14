@@ -28,7 +28,6 @@ def create_app():
     def index():
         # Нужно доделать вывод автора рецепта, дату и т.п.
         recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
-        # user = User.query.filter_by(id=Recipe.user_id).first()
         return render_template('index.html', recipes_list=recipes_list)
 
     @app.route('/admin')
