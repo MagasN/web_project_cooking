@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, IntegerField, PasswordField, FileField, SubmitField, SearchField
+from wtforms import HiddenField, StringField, TextAreaField, IntegerField, PasswordField, FileField, SubmitField, SearchField
 from wtforms.validators import DataRequired, Length, Regexp, NumberRange
 
 
@@ -22,3 +22,8 @@ class EditRecipeForm(FlaskForm):
     time_cooking = IntegerField('Время приготовления', validators=[DataRequired(), NumberRange(min=1)], render_kw={'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'Время приготовления'})
     # ingredient_id = IntegerField('Ингредиенты', validators=[DataRequired()])
     submit = SubmitField('Изменить', render_kw={'class': 'btn btn-primary'})
+
+class CommentForm(FlaskForm):
+    recipe_id = HiddenField('ID рецепта', validators=[DataRequired()])
+    comment_text = StringField('Добавьте комментарий', validators=[DataRequired()], render_kw={"class": "form-control"})
+    submit = SubmitField('Отправить', render_kw={"class": "btn btn-primary"})

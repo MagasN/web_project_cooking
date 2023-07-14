@@ -34,10 +34,41 @@
             <div class="card-footer text-body-secondary">
                 <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
                 <!-- Здесь нужно подставить автора по user_id рецепта -->
-                <span>Автор рецепта: Вася Пупкин</span>
+                <span>Автор рецепта: Вася</span>
+                <!-- Разрешение на отображение кнопок -->
                 <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
                 <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
             </div>
+
+            {% include('messages.html') %}
+
+            <h5><strong>Комментарии:</strong></h5>
+            {% if recipe.comment %}
+                {% for comment in recipe.comment %}
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text"><b>{{ comment.comment }}</b></p>
+                            <p class="card-text">
+                                <small>Опубликовано: {{ comment.created_at.strftime('%d.%m.%Y') }} | 
+                                    Автор: {{ comment.user.full_name }}</small>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if current_user.is_authenticated %}
+                <form action="{{ url_for('recipe.add_comment') }}" method="POST">
+                    {{ comment_form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ comment_form.comment_text.label }}
+                        {{ comment_form.comment_text() }}
+                    </div>
+                    {{ comment_form.submit() }}
+                </form>
+            {% else %}
+                <p><a href="{{ url_for('user.login', next=request.full_path) }}">Авторизуйтесь</a>, чтобы добавить комментарий</p>
+            {% endif %}
         </div>
     </div>
 </div>

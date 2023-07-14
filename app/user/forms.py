@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, SubmitField, TextAreaField
+from wtforms import BooleanField, StringField, PasswordField, SubmitField, FileField
 from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
 
 # from app.user.models import User
@@ -23,4 +23,5 @@ class UserProfileForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     full_name = StringField('Фамилия имя', validators=[DataRequired()], render_kw={"class": "form-control"})
+    image_user = FileField('Загрузите фото', render_kw={'class': 'input-group-text', 'id': 'inputGroupFile02'})
     submit = SubmitField('Сохранить', render_kw={"class":"btn btn-primary"})

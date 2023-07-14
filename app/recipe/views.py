@@ -1,14 +1,18 @@
-from flask import Blueprint, render_template, redirect, flash, url_for, request
+from flask import abort, Blueprint, current_app, render_template, redirect, flash, url_for, request
+from flask_login import current_user, login_required
 
-from app.recipe.forms import AddRecipeForm, EditRecipeForm
+from app.recipe.forms import AddRecipeForm, EditRecipeForm, CommentForm
 from app.recipe.models import Comment, Unit, Ingredient, Recipe
+from app.user.models import User
 from app.model import db
+from app.utils import get_redirect_target
 
 
 blueprint = Blueprint('recipe', __name__, url_prefix='/recipes')
 
 @blueprint.route('/top')
 def top_recipes():
+    # user = User.query.filter_by(id=Recipe.user_id).first_or_404()
     # Нужно доделать вывод автора рецепта, дату и т.п.
     recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
     return render_template('top_recipes.html', recipes_list=recipes_list)
@@ -16,7 +20,29 @@ def top_recipes():
 @blueprint.route('/<int:id>')
 def recipe_page(id):
     recipe = Recipe.query.get(id)
-    return render_template('recipe_page.html', recipe=recipe)
+    # user = User.query.filter_by(id=Recipe.user_id).first()
+    form = CommentForm(recipe_id = recipe.id)
+
+    return render_template('recipe_page.html', recipe=recipe, comment_form=form)
+
+@blueprint.route('/comment', methods=['POST'])
+@login_required
+def add_comment():
+    form = CommentForm()
+    if form.validate_on_submit():
+        if Recipe.query.filter(Recipe.id == form.recipe_id.data).first():
+            comment = Comment(comment=form.comment_text.data, recipe_id=form.recipe_id.data, user_id=current_user.id)
+            db.session.add(comment)
+            db.session.commit()
+            flash('Комментарий успешно добавлен') 
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash('Ошибка в заполнении поля "{}": - {}'.format(
+                        getattr(form, field).label.text,
+                        error
+                    ))
+        return redirect(get_redirect_target())  
     
 @blueprint.route('/add')
 def add_recipe():

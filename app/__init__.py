@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_login import LoginManager, current_user, login_required
 
 from app.model import db
+from app.config import Config
 
 from app.recipe.models import Recipe
 from app.user.models import User
@@ -10,7 +11,7 @@ from app.recipe.views import blueprint as recipe_blueprint
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_pyfile('config.py')
+    app.config.from_object(Config)
     db.init_app(app)
 
     login_manager = LoginManager()
@@ -27,6 +28,7 @@ def create_app():
     def index():
         # Нужно доделать вывод автора рецепта, дату и т.п.
         recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
+        # user = User.query.filter_by(id=Recipe.user_id).first()
         return render_template('index.html', recipes_list=recipes_list)
 
     @app.route('/admin')

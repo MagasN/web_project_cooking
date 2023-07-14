@@ -1,4 +1,6 @@
 from datetime import datetime
+from sqlalchemy.orm import relationship
+
 from app.user.models import User
 
 from app.model import db
@@ -10,8 +12,20 @@ class Comment(db.Model):
     comment = db.Column(db.String)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_deleted = db.Column(db.Boolean)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True, nullable=False)
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id', ondelete='CASCADE'),
+        index=True
+        )
+    recipe_id = db.Column(
+        db.Integer,
+        db.ForeignKey('recipes.id', ondelete='CASCADE'),
+        index=True
+        )
     
+    recipe = relationship('Recipe', backref='comment')
+    user = relationship('User', backref='comment')
+
     def __repr__(self):
         return f'<Comment id: {self.id}, text: {self.comment}>'
 
@@ -30,7 +44,11 @@ class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ingredient_name = db.Column(db.String, nullable=False)
     ingredient_quantily = db.Column(db.String, nullable=False)
-    unit_id = db.Column(db.Integer, db.ForeignKey(Unit.id), index=True, nullable=False)
+    unit_id = db.Column(
+        db.Integer,
+        db.ForeignKey('units_measure.id', ondelete='CASCADE'),
+        index=True
+        )
 
     def __repr__(self):
         return f'Ingredient id: {self.id}, name: {self.ingredient_name}'
@@ -51,9 +69,14 @@ class Recipe(db.Model):
     is_deleted = db.Column(db.Boolean)
     is_archived = db.Column(db.Boolean) 
     archived_at = db.Column(db.DateTime) 
-    comment_id = db.Column(db.Integer, db.ForeignKey(Comment.id), index=True)
-    # user_id = db.Column(db.Integer, db.ForeignKey(User.id), index=True, nullable=False)
+
     # ingredient_id = db.Column(db.Integer, db.ForeignKey(Ingredient.id), index=True, nullable=False)
+    
+    user = relationship('User', backref='recipes')
+
+    def comments_count(self):
+        return Comment.query.filter(Comment.recipe_id == self.id).count()
+    
 
     def __repr__(self):
         return f'Recipe id: {self.id}, title: {self.title}'

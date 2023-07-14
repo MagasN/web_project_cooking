@@ -15,16 +15,14 @@
         <div class="card mb-3">
             <div class="card-header">
                 <h5><a href="/recipes/{{ recipe.id }}">{{ recipe.title }}</a></h5>
-                <span>Автор: Вася Пупкин</span>
+                <span>Автор: Вася</span>
             </div>
             <div class="card-body">
                 <span><img class="img-thumbnail rounded float-start me-4" src="../static/img/posts_img.png" alt="posts_img" width="180px" height="100px"></span>
                 <p class="card-text">{{ recipe.decription_recipe }}</p>
             </div>
             <div class="card-footer text-body-secondary">
-                <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
-                <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
-                <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
+                <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }} | Комментарии: {{ recipe.comments_count() }}</span>
                 <a href="/recipes/{{ recipe.id }}" class="btn btn-primary">Подробнее</a>
             </div>
         </div>

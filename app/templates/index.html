@@ -9,31 +9,23 @@
     <div class="posts-header border rounded-3 p-2 text-center mb-3">
         <h5>Свежее</h5>
     </div>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="alert alert-warning" role="alert">
-        {% for message in messages %}
-            {{ message }}<br>
-        {% endfor %}
-    </div>
-    {% endif %}
-    {% endwith %}
+
+    {% include('messages.html') %}
+    
 {% if recipes_list|length > 0 %}
     {% for recipe in recipes_list %}
     <div class="rounded-1 p-1">
         <div class="card mb-3">
             <div class="card-header">
                 <h5><a href="/recipes/{{ recipe.id }}">{{ recipe.title }}</a></h5>
-                <span>Автор: Вася Пупкин</span>
+                <span>Автор: Вася</span>
             </div>
             <div class="card-body">
                 <span><img class="img-thumbnail rounded float-start me-4" src="../static/img/posts_img.png" alt="posts_img" width="180px" height="100px"></span>
                 <p class="card-text">{{ recipe.decription_recipe }}</p>
             </div>
             <div class="card-footer text-body-secondary">
-                <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
-                <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
-                <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
+                <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }} | Комментарии: {{ recipe.comments_count() }}</span>
                 <a href="/recipes/{{ recipe.id }}" class="btn btn-primary">Подробнее</a>
             </div>
         </div>
