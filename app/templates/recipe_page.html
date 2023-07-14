@@ -33,15 +33,18 @@
             </div>
             <div class="card-footer text-body-secondary">
                 <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
-                <!-- Здесь нужно подставить автора по user_id рецепта -->
+                
                 <span>Автор рецепта: {{recipe.user.full_name}} </span>
                 <!-- Разрешение на отображение кнопок -->
-                <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
-                <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
+                {% if (recipe.user.id == current_user.id) %}
+                    <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
+                    <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
+                {% endif %}
+
             </div>
 
             {% include('messages.html') %}
-
+            
             <h5><strong>Комментарии:</strong></h5>
             {% if recipe.comment %}
                 {% for comment in recipe.comment %}
