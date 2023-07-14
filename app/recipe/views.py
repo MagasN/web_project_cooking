@@ -12,7 +12,6 @@ blueprint = Blueprint('recipe', __name__, url_prefix='/recipes')
 
 @blueprint.route('/top')
 def top_recipes():
-
     # Нужно доделать вывод автора рецепта, дату и т.п.
     recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
     return render_template('top_recipes.html', recipes_list=recipes_list)
@@ -49,7 +48,7 @@ def add_recipe():
     return render_template('add_recipe.html', form=add_recipe_form)
     
 @blueprint.route('/process-add-recipe', methods=['POST'])
-@login_required
+
 def process_add_recipe():
     form = AddRecipeForm()
     if form.validate_on_submit():
@@ -65,7 +64,7 @@ def process_add_recipe():
         flash('Рецепт успешно добавлен!')
         return redirect(url_for('index'))
     flash('Неправильно заполнена форма!')
-    return redirect(url_for('add_recipe'))
+    return redirect(url_for('recipe.add_recipe'))
     
 @blueprint.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_recipe(id):
@@ -95,8 +94,13 @@ def recipe_delete(id):
 @blueprint.route('/my_recipes')
 @login_required
 def my_recipes():
-    recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
-    return render_template('my_recipes.html', recipes_list=recipes_list)
+    user = Recipe.query.filter(Recipe.user_id == current_user.id).count()
+    if user:
+        recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
+        return render_template('my_recipes.html', recipes_list=recipes_list)
+    flash('Вы пока не добавили ни одного рецепта. Скорей переходи в категорию "Добавить рецепт"')
+    return redirect(url_for('index'))
+
         
 @blueprint.route('/search')
 def search():

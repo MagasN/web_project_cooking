@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Топ рецептов
+Мои рецепты
 {% endblock %}
 
 {% block content %}
@@ -9,9 +9,9 @@
     <div class="posts-header border rounded-3 p-2 text-center mb-3">
         <h5>Мои рецепты</h5>
     </div>
-
+    {% include('messages.html') %}
 {% if recipes_list|length > 0 %}
-    {% for recipe in recipes_list %}
+    {% for recipe in recipes_list if not break %}
         {% if (recipe.user.id == current_user.id) %}
             <div class="rounded-1 p-1">
                 <div class="card mb-3">
@@ -33,8 +33,6 @@
             </div>
         {% endif %}
     {% endfor %}
-{% else %}
-<p class="text-center">Нет рецептов на данный момент</p>
 {% endif %}
 
 </div>
