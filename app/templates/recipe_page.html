@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+{{ recipe.title }}
+{% endblock %}
+
+{% block content %}
+<div class="col-md-10 col-sm-12">
+    <div class="posts-header border rounded-3 p-2 ps-4 mb-3">
+        <h5>{{ recipe.title }}</h5>
+    </div>
+    <div class="rounded-1 p-1">
+        <div class="card mb-3">
+            <div class="card-body row">
+                {% if recipe.image_recipe %}
+                <div class="col-3">
+                    <img class="img-thumbnail rounded float-start me-4" src="/static/uploads/{{ recipe.image_recipe }}" alt="{{ recipe.title }}" width="280px" height="200px">
+                </div>
+                {% else %}
+                <div class="col-3">
+                    <img class="img-thumbnail rounded float-start me-4" src="/static/img/no_photo_recipe.png" alt="{{ recipe.title }}" width="280px" height="200px">
+                </div>
+                {% endif %}
+                <div class="col-6">
+                    <h5>Ингредиенты:</h5>
+                    <p>{{ recipe.ingredients }}</p>
+                </div>
+                <div class="col-3">
+                    Количество порций: {{ recipe.servings }}<br>
+                    Время приготовления: {{ recipe.time_cooking }} минут
+                </div>
+
+              <div class="col-12">
+                <p class="pt-3">{{ recipe.decription_recipe }}</p>
+              </div>
+              <div class="col-12">
+                <h5><strong>Пошаговый рецепт приготовления</strong></h5>
+                <p>{{ recipe.steps_recipe }}</p>
+              </div> 
+            </div>
+            <div class="card-footer text-body-secondary mb-3">
+                <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }} | </span>
+                <span>Автор рецепта: {{recipe.user.full_name}}</span>
+                <!-- Разрешение на отображение кнопок -->
+                {% if (recipe.user.id == current_user.id) %}
+                    <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
+                    <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
+                {% endif %}
+
+            </div>
+
+            {% include('messages.html') %}
+            
+            <h5><strong class="p-3 mb-3">Комментарии: {{ recipe.comments_count() }}</strong></h5>
+            {% if recipe.comment %}
+                {% for comment in recipe.comment %}
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text"><b>{{ comment.comment }}</b></p>
+                            <p class="card-text">
+                                <small>Опубликовано: {{ comment.created_at.strftime('%d.%m.%Y') }} | 
+                                    Автор: {{ comment.user.full_name }}</small>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if current_user.is_authenticated %}
+                <form action="{{ url_for('recipe.add_comment') }}" method="POST">
+                    {{ comment_form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ comment_form.comment_text.label }}
+                        {{ comment_form.comment_text() }}
+                    </div>
+                    {{ comment_form.submit() }}
+                </form>
+            {% else %}
+                <p><a href="{{ url_for('user.login', next=request.full_path) }}">Авторизуйтесь</a>, чтобы добавить комментарий</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

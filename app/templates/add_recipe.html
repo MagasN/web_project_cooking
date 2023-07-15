@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+Добавление рецепта
+{% endblock %}
+
+{% block content %}
+<div class="col-md-10 col-sm-12">
+    <div class="posts-header border rounded-3 p-2 text-center mb-3">
+        <h5>Добавление рецепта</h5>
+    </div>
+    {% include('messages.html') %}
+    <div class="rounded-1 p-1">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Форма</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <form action="{{ url_for('.add_recipe') }}" method="post" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <div class="form-floating mb-3">
+                            {{ form.title() }}
+                            {{ form.title.label(for="floatingInput") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.decription_recipe() }}
+                            {{ form.decription_recipe.label(class_="form-label", for="floatingInput") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.ingredients() }}
+                            {{ form.ingredients.label(class_="form-label", for="floatingTextarea2") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.steps_recipe() }}
+                            {{ form.steps_recipe.label(class_="form-label", for="floatingTextarea3") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.servings() }}
+                            {{ form.servings.label(class_="form-label", for="floatingInput") }}
+                        </div>
+                        <div class="form-floating mb-3">
+                            {{ form.time_cooking() }}
+                            {{ form.time_cooking.label(class_="form-label", for="floatingInput") }}
+                        </div>
+                        <div class="input-group mb-3">
+                            {{ form.image_recipe.label(class_="input-group-text", for="inputGroupFile01") }}
+                            {{ form.image_recipe() }}
+                        </div>
+                        <p>
+                            {{ form.submit() }}
+                        </p>
+                    </form>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
