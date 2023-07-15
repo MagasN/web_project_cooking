@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Результаты поиска
+{% block page_title %}
+{{ page_title }}
 {% endblock %}
 
 {% block content %}
 <div class="col-md-10 col-sm-12">
     <div class="posts-header border rounded-3 p-2 text-center mb-3">
-        <h5>Результаты поиска</h5>
+        <h5>{{ page_title }}</h5>
     </div>
+
+    {% include('messages.html') %}
+
 {% if search_results %}
     {% for recipe in search_results %}
     <div class="rounded-1 p-1">
         <div class="card mb-3">
             <div class="card-header">
                 <h5><a href="/recipes/{{ recipe.id }}">{{ recipe.title }}</a></h5>
-                <span>Автор: Вася Пупкин</span>
+                <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
             </div>
             <div class="card-body">
                 {% if recipe.image_recipe %}
@@ -26,23 +29,16 @@
                 <p class="card-text">{{ recipe.decription_recipe }}</p>
             </div>
             <div class="card-footer text-body-secondary">
-                <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
+                <span>Автор: {{recipe.user.full_name}} | Комментарии: {{ recipe.comments_count() }}</span>
                 <a href="/recipes/{{ recipe.id }}" class="btn btn-primary">Подробнее</a>
             </div>
         </div>
     </div>
     {% endfor %}
 {% else %}
-<div class="rounded-1 p-1">
-    <div class="card mb-3">
-        <div class="card-header">
-            &nbsp
-        </div>
-        <div class="card-body">
-            <p class="text-center">Нет результатов поиска</p>
-        </div>
+    <div class="card card-body">
+        <p class="text-center">Нет рецептов на данный момент</p>
     </div>
-</div>
 {% endif %}
 </div>
 {% endblock %}

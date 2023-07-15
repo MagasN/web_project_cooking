@@ -1,8 +1,15 @@
-.sidebar {
+body {
     background-color: #F8F4E8;
 }
+
+.sidebar {
+    background-color: #dcecf7;
+}
+.sidebar a:hover {
+    background-color: var(--bs-nav-pills-link-active-bg);
+}
 .posts-header {
-    background-color: #e7f9ffe8;
+    background-color: #f8f8f8;
     ;
 }
 .posts-img {

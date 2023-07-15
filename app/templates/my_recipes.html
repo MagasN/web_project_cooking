@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Мои рецепты
+{% block page_title %}
+{{ page_title }}
 {% endblock %}
 
 {% block content %}
 <div class="col-md-10 col-sm-12">
     <div class="posts-header border rounded-3 p-2 text-center mb-3">
-        <h5>Мои рецепты</h5>
+        <h5>{{ page_title }}</h5>
     </div>
     {% include('messages.html') %}
 {% if recipes_list|length > 0 %}
@@ -17,7 +17,7 @@
                 <div class="card mb-3">
                     <div class="card-header">
                         <h5><a href="/recipes/{{ recipe.id }}">{{ recipe.title }}</a></h5>
-                        <span>Автор: {{recipe.user.full_name}}</span>
+                        <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }}</span>
                     </div>
                     <div class="card-body">
                         {% if recipe.image_recipe %}
@@ -28,7 +28,7 @@
                         <p class="card-text">{{ recipe.decription_recipe }}</p>
                     </div>
                     <div class="card-footer text-body-secondary">
-                        <span>Создан: {{ recipe.created_at.strftime('%d.%m.%Y в %H:%M') }} | Комментарии: {{ recipe.comments_count() }}</span>
+                        <span>Автор: {{recipe.user.full_name}} | Комментарии: {{ recipe.comments_count() }}</span>
                         <a href="/recipes/edit/{{ recipe.id }}" class="btn btn-success">Редактировать</a>
                         <a href="/recipes/delete/{{ recipe.id }}" class="btn btn-danger">Удалить</a>
                         <a href="/recipes/{{ recipe.id }}" class="btn btn-primary">Подробнее</a>

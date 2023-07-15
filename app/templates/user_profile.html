@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block page_title %}
+{{ page_title }}
+{% endblock %}
+
 {% block content %}
 <div class="col-md-10 col-sm-12">
     <div class="posts-header border rounded-3 p-2 text-center mb-3">
@@ -8,6 +12,8 @@
     
     {% include('messages.html') %}
     
+    
+    <div class="card card-body">
     <img 
         src="{{ current_user.image_user }}"                
         alt="photo"
@@ -22,6 +28,7 @@
     {% if user == current_user %}
         <p><a href="{{ url_for('user.edit_profile', username=current_user.username) }}">{{ form.submit() }}</a></p>
     {% endif %}
+    </div>
     
 </div>
 {% endblock %}

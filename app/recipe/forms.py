@@ -31,7 +31,7 @@ class AddRecipeForm(FlaskForm):
         render_kw={
             "class": "form-control",
             "id": "floatingTextarea2",
-            "placeholder": "Шаги приготовления",
+            "placeholder": "Ингридиенты",
             "style": "height: 200px",
         },
     )
@@ -51,9 +51,9 @@ class AddRecipeForm(FlaskForm):
         render_kw={"class": "form-control", "id": "floatingInput", "placeholder": "Количество порций"},
     )
     time_cooking = IntegerField(
-        "Время приготовления",
+        "Время приготовления, минут",
         validators=[DataRequired(), NumberRange(min=1)],
-        render_kw={"class": "form-control", "id": "floatingInput", "placeholder": "Время приготовления"},
+        render_kw={"class": "form-control", "id": "floatingInput", "placeholder": "Время приготовления, минут"},
     )
     # ingredient_id = IntegerField('Ингредиенты', validators=[DataRequired()])
     submit = SubmitField("Добавить", render_kw={"class": "btn btn-primary"})
