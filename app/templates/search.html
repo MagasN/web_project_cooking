@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Поиск рецепта
+{% block page_title %}
+{{ page_title }}
 {% endblock %}
 
 {% block content %}
 <div class="col-md-10 col-sm-12">
     <div class="posts-header border rounded-3 p-2 text-center mb-3">
-        <h5>Поиск</h5>
+        <h5>{{ page_title }}</h5>
     </div>
     <div class="rounded-1 p-1">
         <div class="card mb-3">
             <div class="card-header">
-                <h5>Форма</h5>
+                <h5>Форма поиска</h5>
             </div>
             <div class="card-body">
                 <p class="card-text">

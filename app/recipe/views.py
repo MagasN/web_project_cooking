@@ -15,8 +15,10 @@ blueprint = Blueprint("recipe", __name__, url_prefix="/recipes")
 
 @blueprint.route("/top")
 def top_recipes():
-    recipes_list = Recipe.query.order_by(Recipe.positive_feedback.desc()).all()
-    return render_template("top_recipes.html", recipes_list=recipes_list)
+    title = 'Топ рецептов'
+    recipes = Recipe.query.all()
+    recipes_list = sorted(recipes, key=lambda r: r.comments_count(), reverse=True)
+    return render_template("top_recipes.html", page_title=title, recipes_list=recipes_list)
 
 
 @blueprint.route("/<int:id>")
@@ -84,6 +86,7 @@ def add_recipe():
 
 @blueprint.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit_recipe(id):
+    title = 'Редактирование рецепта'
     recipe = Recipe.query.filter(Recipe.id == id).first()
     form = EditRecipeForm()
     if form.validate_on_submit() and request.method == "POST":
@@ -113,7 +116,7 @@ def edit_recipe(id):
             print("Error:", exc)
             return f"При редактировании рецепта произошла ошибка."
     form = EditRecipeForm(obj=recipe)
-    return render_template("edit_recipe.html", recipe=recipe, form=form)
+    return render_template("edit_recipe.html", page_title=title, recipe=recipe, form=form)
 
 
 @blueprint.route("/delete/<int:id>")
@@ -133,29 +136,33 @@ def recipe_delete(id):
 @blueprint.route("/my")
 @login_required
 def my_recipes():
+    title = 'Мои рецепты'
     user = Recipe.query.filter(Recipe.user_id == current_user.id).count()
     if user:
         recipes_list = Recipe.query.order_by(Recipe.created_at.desc()).all()
-        return render_template("my_recipes.html", recipes_list=recipes_list)
+        return render_template("my_recipes.html", page_title=title, recipes_list=recipes_list)
     flash('Вы пока не добавили ни одного рецепта. Скорей переходи в категорию "Добавить рецепт"')
     return redirect(url_for("index"))
 
 
 @blueprint.route("/search")
 def search():
-    return render_template("search.html")
+    title = 'Поиск рецепта'
+    return render_template("search.html", page_title=title,)
 
 
 @blueprint.route("/search-results")
 def search_results():
+    title = 'Результаты поиска'
     q = request.args.get("q")
     print(q)
     if q:
         search_results = Recipe.query.filter(Recipe.title.contains(q) | Recipe.decription_recipe.contains(q)).all()
         print(type(search_results))
-    return render_template("search_result.html", search_results=search_results)
+    return render_template("search_result.html", page_title=title, search_results=search_results)
 
 
 @blueprint.route("/favorite")
 def recipes_favorites():
-    return render_template("favorites_recipes.html")
+    title = 'Избранные рецепты'
+    return render_template("favorites_recipes.html", page_title=title)

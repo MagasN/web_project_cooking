@@ -11,11 +11,11 @@
       crossorigin="anonymous"
     />
     <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}"
     />
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <div class="container">
       <header class="p-3 mb-3 border-bottom">
         <div
@@ -28,7 +28,6 @@
               href="/"
               class="d-flex align-items-center link-body-emphasis text-decoration-none"
             >
-              <!-- <b>Лого</b> -->
               <h1>Best cook</h1>
             </a>
           </div>
@@ -85,8 +84,7 @@
               <li class="nav-item">
                 <a
                   href="{{ url_for('index') }}"
-                  class="nav-link active"
-                  aria-current="page"
+                  class="nav-link link-body-emphasis"
                   >Свежее</a
                 >
               </li>
@@ -111,6 +109,14 @@
 
         {% block content %}{% endblock %}
       </div>
+    </div>
+
+    <div class="container mt-auto pt-4">
+      <footer class="text-center bg-light text-muted">
+        <div class="text-center p-2 rounded-3" style="background-color: #f8f8f8;">
+          Developed by <a href="https://github.com/MagasN" target="_blank">MagasN</a> and <a href="https://github.com/System256" target="_blank">System256</a>
+        </div>
+      </footer>
     </div>
 
     <script
